@@ -1,0 +1,70 @@
+
+/*------
+  Colors
+  ------*/
+
+$bg-color: #202124;
+$fg-color: #ffffff;
+
+/*-----
+  Fonts
+  -----*/
+
+$font: Helvetica,Arial,sans-serif;
+
+
+/*------------
+  Import Files
+  ------------*/
+
+/* 
+->  ./_extra-styles.scss
+@use 'extra-styles'; 
+*/
+
+
+/*-----------
+  Base Config
+  -----------*/
+
+*,
+*::before,
+*::after {
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    width: 100vw;
+    height: 100vh;
+ }
+    
+body {
+    background-color: $bg-color;
+    color: $fg-color;
+    margin: 0 10px;
+}
+    
+a,
+a:link,
+a:visited,
+a:hover,
+a:active {
+    text-decoration: none;
+}
+
+
+/*-------------
+  Shared Assets
+  -------------*/
+
+
+
+/*-----------
+  Page Layout
+  -----------*/
+
+h1 {
+}
