@@ -4,6 +4,8 @@
 /*-----
   Fonts
   -----*/
+@import url("https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alatsi&display=swap");
 /*------------
   Import Files
   ------------*/
@@ -11,26 +13,15 @@
 ->  ./_extra-styles.scss
 @use 'extra-styles'; 
 */
-/*-----------
-  Base Config
-  -----------*/
+/*-------------
+   Base Config
+  --------------*/
 *,
 *::before,
 *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-html {
-  width: 100vw;
-  height: 100vh;
-}
-
-body {
-  background-color: #202124;
-  color: #ffffff;
-  margin: 0 10px;
 }
 
 a,
@@ -41,9 +32,88 @@ a:active {
   text-decoration: none;
 }
 
-/*-------------
-  Shared Assets
-  -------------*/
-/*-----------
-  Page Layout
-  -----------*//*# sourceMappingURL=styles.css.map */
+html {
+  width: 100vw;
+  height: 100vh;
+}
+
+body {
+  background-color: #19223F;
+  color: #ffffff;
+  margin: 0 10px;
+}
+
+/*--------
+   Header
+  --------*/
+#home-header {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  margin: 0 0 20px;
+}
+#home-header div {
+  margin: 48px auto 20px;
+  padding: 48px auto 0;
+  width: 75%;
+}
+#home-header div h1 {
+  text-align: center;
+  font-family: "Archivo Black";
+  font-style: normal;
+  font-size: 40px;
+  line-height: 51px;
+}
+#home-header img {
+  width: 112px;
+  margin: 0 auto;
+}
+
+/*------
+   Main
+  ------*/
+#home-main {
+  min-height: calc(100vh - 288px);
+  width: 95%;
+  margin: 0 auto;
+  padding: 10px 10px 0;
+  background-color: #222E5E;
+  border-radius: 20px 20px 0 0;
+}
+#home-main label {
+  display: block;
+  margin-bottom: 10px;
+  margin-left: 3px;
+  font-family: "Alatsi";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.25rem;
+  color: #F4C149;
+}
+#home-main label:first-of-type {
+  margin-top: 10px;
+}
+#home-main input {
+  width: 100%;
+  height: 3rem;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  border-radius: 10px;
+  font-size: 1.5rem;
+}
+#home-main div:nth-of-type(2) {
+  text-align: center;
+}
+#home-main button {
+  height: 50px;
+  width: 150px;
+  margin: 20px auto;
+  background-color: #F4C149;
+  border: 0;
+  border-radius: 30px;
+  font-family: "Alatsi";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1.5rem;
+  color: black;
+}/*# sourceMappingURL=styles.css.map */

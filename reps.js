@@ -1,9 +1,13 @@
 
-let url = `https://www.googleapis.com/civicinfo/v2/representatives?key=${env.API_KEY}&address=Floresville%20TX%2078114`;
-
+/*
+ * ----------
+ * Fetch data
+ * ----------
+ */
 
 /*
 // fetch civic data
+let url = `https://www.googleapis.com/civicinfo/v2/representatives?key=${env.API_KEY}&address=Floresville%20TX%2078114`;
 async function getData() {
     try {
         const res = await fetch(url)
@@ -26,8 +30,11 @@ console.log(civicData);
 
 
 /*
-    Representatives
-*/
+ * -------------------
+ * Representative info
+ * -------------------
+ */
+
 
 // display congressional district
 for (var key in civicData.divisions) {
@@ -67,6 +74,7 @@ for (var key in civicData.divisions) {
 // get representatives
 for (let key in civicData.offices) {
 
+    // get current title
     let title = civicData.offices[key].name;
 
     // federal
@@ -74,19 +82,20 @@ for (let key in civicData.offices) {
         createRep("federal", key, title);
     }
 
-    // state reps
+    // state
     else if (title.includes(`${state}`) || title.includes(`${stateAbrev}`)) {
         createRep("state", key, title);
     }
 
-    // county reps
+    // county
     else if (title.includes('County')) {
         createRep("county", key, title);
     }
-
 }
 
 
 /*
-    Voting
-*/
+ * -----------
+ * Voting info
+ * -----------
+ */

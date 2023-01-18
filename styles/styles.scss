@@ -3,14 +3,30 @@
   Colors
   ------*/
 
-$bg-color: #202124;
-$fg-color: #ffffff;
+$body-bg-color: #19223F;
+$body-fg-color: #ffffff;
+$main-bg-color: #222E5E;
+$form-label-color: #F4C149;
+$button-bg-color: #F4C149;
+$button-fg-color: black;
+
 
 /*-----
   Fonts
   -----*/
 
-$font: Helvetica,Arial,sans-serif;
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&display=swap');
+@mixin home-header-font {
+  font-family: 'Archivo Black';
+  font-style: normal;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Alatsi&display=swap');
+@mixin main-form-font {
+  font-family: 'Alatsi';
+  font-style: normal;
+  font-weight: 400;
+}
 
 
 /*------------
@@ -23,30 +39,18 @@ $font: Helvetica,Arial,sans-serif;
 */
 
 
-/*-----------
-  Base Config
-  -----------*/
+/*-------------
+   Base Config
+  --------------*/
 
 *,
 *::before,
 *::after {
-
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-html {
-    width: 100vw;
-    height: 100vh;
- }
-    
-body {
-    background-color: $bg-color;
-    color: $fg-color;
-    margin: 0 10px;
-}
-    
 a,
 a:link,
 a:visited,
@@ -55,16 +59,96 @@ a:active {
     text-decoration: none;
 }
 
+html {
+    width: 100vw;
+    height: 100vh;
+ }
+    
+body {
+    background-color: $body-bg-color;
+    color: $body-fg-color;
+    margin: 0 10px;
+}
 
-/*-------------
-  Shared Assets
-  -------------*/
+
+/*--------
+   Header
+  --------*/
+
+#home-header {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  margin: 0 0 20px;
+
+  // page title
+  div {
+  margin: 48px auto 20px;
+  padding: 48px auto 0;
+  width: 75%;
+
+    h1 {
+      text-align: center;
+      @include home-header-font;
+      font-size: 40px;
+      line-height: 51px;
+    }
+  }
+
+  // flag logo
+  img {
+    width: 112px;
+    margin: 0 auto;
+  }
+}
 
 
+/*------
+   Main
+  ------*/
 
-/*-----------
-  Page Layout
-  -----------*/
+#home-main {
+  min-height: calc(100vh - 288px);
+  width: 95%;
+  margin: 0 auto;
+  padding: 10px 10px 0;
+  background-color: $main-bg-color;
+  border-radius: 20px 20px 0 0;
 
-h1 {
+  // address form
+  label {
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 3px;
+    @include main-form-font;
+    font-size: 1.25rem;
+    color: $form-label-color;
+  }
+  label:first-of-type {
+    margin-top: 10px;
+  }
+  input {
+    width: 100%;
+    height: 3rem;
+    margin-bottom: 20px;
+    padding: 0 10px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+  }
+
+  // search button
+  div:nth-of-type(2) {
+    text-align: center;
+  }
+  button {
+    height: 50px;
+    width: 150px;
+    margin: 20px auto;
+    background-color: $button-bg-color;
+    border: 0;
+    border-radius: 30px;
+    @include main-form-font;
+    font-size: 1.5rem;
+    color: $button-fg-color;
+  }
 }
