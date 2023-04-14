@@ -8,17 +8,38 @@ import * as dotenv from 'dotenv';
 dotenv.config()
 
 import express from 'express';
+import * as url from 'url';
+import path from 'path';
+//import livereload from 'livereload';
+//import connectLivereload from 'connect-livereload';
 import { getApiData } from './fetchAPI.mjs';
 import cors from 'cors';
 
-
 const app = express();
 const PORT = 3050;
+const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-app.use(express.urlencoded({ extended: false }));
+// livereload browser
+/*
+const liveReloadServer = livereload.createServer();
+liveReloadServer.watch(path.join(__dirname, 'src'))
+app.use(connectLivereload());
+*/
+
+//app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
+// serve app
+//app.use(express.static('src/public'))
+app.use('/static', express.static(path.resolve('src/public', 'static')));
+
+// fetch home page
+app.get('/*', (req, res) => {
+    res.sendFile(path.resolve('src/public', 'index.html'));
+});
+
+// fetch reps from api
 app.get('/representatives', async (req, res) => {
 
     const address = req.query.address;

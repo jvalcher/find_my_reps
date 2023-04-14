@@ -5,6 +5,7 @@ dotenv.config()
 
 import express from 'express';
 import { getApiData } from './fetchAPI.mjs';
+
 const app = express();
 const PORT = 3050;
 

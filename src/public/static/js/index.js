@@ -4,6 +4,59 @@ import { getFormData } from './form.mjs';
 import { getRepData } from './fetchServer.mjs';
 import { renderReps } from './reps.mjs';
 
+import Search from './views/Search.js';
+
+// page router
+const router = async () => {
+
+    const routes = [
+        { path: '/', view: Search },
+        { path: '/reps', view: () => console.log('Viewing reps page')}
+    ];
+
+    // match pathname with route
+    const matches = routes.map(route => {
+        return {
+            route: route,
+            isMatch: location.pathname === route.path
+        }
+    });
+
+    // get current pathname
+    let match = matches.find((matches) => matches.isMatch);
+
+    // if path incorrect, default to home
+    if (!match) {
+        match = {
+            route: routes[0],
+            isMatch: true
+        }
+    }
+
+    // inject HTML
+    const view = new match.route.view();
+    document.querySelector('#app').innerHTML = await view.getHtml();
+};
+
+// custom back/forward history nagivation
+window.addEventListener('popstate', router);
+
+// custom nav link functionality
+const navigateTo = (url) => {
+    history.pushState(null, null, url);
+    router();
+}
+document.addEventListener('DOMContentLoaded', () =>{
+    document.body.addEventListener('click', e => {
+        if (e.target.matches('[data-link]')) {
+            e.preventDefault();
+            navigateTo(e.target.href);
+        }
+    })
+    router();
+});
+
+/*
 // render head
 document.head.innerHTML += head;
 
@@ -22,7 +75,7 @@ if (sessionStorage.getItem('currPage') === 'reps') {
 // render search page
 else {
 
-    document.body.innerHTML = searchPage;
+    document.body.innerHTML += searchPage;
     sessionStorage.setItem('pageState', document.body.innerHTML);
     sessionStorage.setItem('currPage', 'search');
 
@@ -54,3 +107,4 @@ else {
             })
     });
 }
+*/

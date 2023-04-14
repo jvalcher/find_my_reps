@@ -4,8 +4,8 @@
   "description": "Get civic data from Google Civic Information API",
   "main": "index.js",
   "scripts": {
-    "dev": "live-server --host=127.0.0.1 --port=5500 --open=./src/public/",
-    "server": "nodemon src/server/server_no_cors.mjs"
+    "front": "live-server --host=127.0.0.1 --port=5500 --open=./src/public/",
+    "dev-server": "nodemon src/server/server_no_cors.mjs"
   },
   "repository": {
     "type": "git",
@@ -18,10 +18,13 @@
   },
   "homepage": "https://github.com/jvalcher/civics_data#readme",
   "devDependencies": {
+    "concurrently": "^8.0.1",
+    "connect-livereload": "^0.6.1",
     "cors": "^2.8.5",
     "cross-env": "^7.0.3",
     "dotenv-cli": "^7.1.0",
     "live-server": "^1.2.2",
+    "livereload": "^0.9.3",
     "nodemon": "^2.0.21",
     "sass": "^1.58.3"
   },
