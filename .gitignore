@@ -1,2 +1,4 @@
-settings.js
-data.json
+node_modules
+.env
+.cache
+test.js
