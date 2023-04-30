@@ -4,7 +4,7 @@ import * as dotenv from 'dotenv';
 dotenv.config()
 
 import express from 'express';
-import { getApiData } from './fetchAPI.mjs';
+import { getApiData } from './fetchAPI.js';
 
 const app = express();
 const PORT = 3050;

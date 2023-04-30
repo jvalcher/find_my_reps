@@ -1,17 +1,15 @@
-import { head } from './head.mjs';
-import { header, search, representatives } from './views.mjs';
-import { getFormData } from './form.mjs';
-import { getRepData } from './fetchServer.mjs';
-import { renderReps } from './reps.mjs';
-
 import Search from './views/Search.js';
+import Reps from './views/Reps.js';
+import { getRepData } from './fetchReps.js';
+import { renderReps } from './renderReps.js';
+
 
 // page router
 const router = async () => {
 
     const routes = [
         { path: '/', view: Search },
-        { path: '/reps', view: () => console.log('Viewing reps page')}
+        { path: '/reps', view: Reps}
     ];
 
     // match pathname with route
@@ -21,11 +19,9 @@ const router = async () => {
             isMatch: location.pathname === route.path
         }
     });
+    const match = matches.find((matches) => matches.isMatch);
 
-    // get current pathname
-    let match = matches.find((matches) => matches.isMatch);
-
-    // if path incorrect, default to home
+    // if path not a route, default to home
     if (!match) {
         match = {
             route: routes[0],
@@ -38,73 +34,80 @@ const router = async () => {
     document.querySelector('#app').innerHTML = await view.getHtml();
 };
 
-// custom back/forward history nagivation
-window.addEventListener('popstate', router);
 
-// custom nav link functionality
-const navigateTo = (url) => {
+// navigate to page
+const navigateTo = async (url) => {
     history.pushState(null, null, url);
     router();
 }
+// hit back/forward button
+window.addEventListener('popstate', (e) => {
+    router();
+    listenForAddressAndRender();
+});
+
+
 document.addEventListener('DOMContentLoaded', () =>{
+
+    router();
+
+    // nav link functionality
     document.body.addEventListener('click', e => {
         if (e.target.matches('[data-link]')) {
             e.preventDefault();
             navigateTo(e.target.href);
         }
     })
-    router();
+
+    listenForAddressAndRender();
 });
 
-/*
-// render head
-document.head.innerHTML += head;
+// start address submit listener, render reps page
+const listenForAddressAndRender = () => {
 
-// search page layout
-const searchPage =  `
-    ${header}
-    ${search}
-`;
+    // wait for address form to load
+    let addressFormLoadAttempts = 5;
+    const addressFormLoaded = setInterval(() => {
 
-// render reps page on refresh
-if (sessionStorage.getItem('currPage') === 'reps') {
+        // if on search page, break
+        if (document.getElementById('search-header')) {
+            clearInterval(addressFormLoadAttempts);
+        }
+        
+        // if form loaded
+        if (document.getElementById('search-form')) {
+            clearInterval(addressFormLoaded);
 
-    document.body.innerHTML = sessionStorage.getItem('pageState');
-} 
+            // start address submit listener
+            document.getElementById('search-form').addEventListener('submit', async (e) => {
 
-// render search page
-else {
+                e.preventDefault();
 
-    document.body.innerHTML += searchPage;
-    sessionStorage.setItem('pageState', document.body.innerHTML);
-    sessionStorage.setItem('currPage', 'search');
+                // create address data object
+                const dataLabels = ["address", "city", "state", "zip"];
+                let formData = {};
+                for (let i = 0; i < 4; i++) {
+                    formData[dataLabels[i]] = document.getElementById(dataLabels[i]).value;
+                }
 
-    // search address, render reps page
-    document.getElementById('search-form').addEventListener('submit', async (e) => {
+                // get API data
+                let apiData;
+                try {
+                    apiData = await getRepData(
+                        formData.address, 
+                        formData.city, 
+                        formData.state, 
+                        formData.zip
+                    );
+                } catch(err) {
+                    console.log(err);
+                }
 
-        e.preventDefault();
-
-        // get form data
-        const formData = getFormData();
-
-        // get API data
-        const apiData = await getRepData(formData.address, formData.city, formData.state, formData.zip)
-
-        // render representatives page skeleton
-        document.body.innerHTML = `
-            ${header}
-            ${representatives}
-        `;
-
-        // insert reps
-        renderReps(apiData)
-
-            // save page state
-            .then( () => {
-                sessionStorage.setItem('pageState', document.body.innerHTML);
-                sessionStorage.setItem('currPage', 'reps');
-                history.pushState('')
-            })
-    });
-}
-*/
+                await navigateTo('/reps');  // navigate to reps page
+                await renderReps(apiData);  // render reps info
+            });
+        }
+        if (addressFormLoadAttempts <= 0) clearInterval(addressFormLoadAttempts);
+        addressFormLoadAttempts--;
+    }, 500)
+};

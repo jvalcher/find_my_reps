@@ -1,6 +1,5 @@
-
 // create, append representative element
-function _createRep(civicData, level, key, title) {
+async function _createRep(civicData, level, key, title) {
 
     // append rep under #<level> element
     for (let i in civicData.offices[key].officialIndices) {
@@ -19,22 +18,27 @@ function _createRep(civicData, level, key, title) {
 // append representatives to page
 export async function renderReps(civicData) {
 
+    // render congressional district
     for (let key in civicData.divisions) {
-        if (key.includes("cd")) {
-            document.getElementById('district').innerText = civicData.divisions[key].name;
+        if (/cd:..$/.test(key)) {
+            const congr_dist = civicData.divisions[key].name;
+            document.getElementById('district').innerText = congr_dist;
+            break;
         }
     }
 
     // get state name and abbreviation
-    let stateAbrev = civicData.normalizedInput.state;
     let state;
-    for (var key in civicData.divisions) {
-        if (key.includes("state") && !key.includes(`${stateAbrev}+"/"`)) {
+    for (let key in civicData.divisions) {
+        if (/state:..$/.test(key)) {
             state = civicData.divisions[key].name;
+            break;
         }
     }
+    const stateAbrev = civicData.normalizedInput.state;
 
     // create representatives
+    repLoop:
     for (let key in civicData.offices) {
 
         // get current title
@@ -47,11 +51,40 @@ export async function renderReps(civicData) {
 
         // state
         else if (title.includes(`${state}`) || title.includes(`${stateAbrev}`)) {
+
+            // filter reps
+            const repIgnoreFilters = [
+                'Accounts',
+                'Railroad',
+                'Land',
+                'Agriculture',
+                'Court',
+            ]
+            for (let filter of repIgnoreFilters) {
+                if (title.includes(filter)) {
+                    continue repLoop
+                }
+            }
+
             _createRep(civicData, "state", key, title);
         }
 
         // county
         else if (title.includes('County')) {
+
+            // filter reps
+            const repIgnoreFilters = [
+                'Clerk',
+                'Tax',
+                'Treasurer',
+                'District Clerk'
+            ]
+            for (let filter of repIgnoreFilters) {
+                if (title.includes(filter)) {
+                    continue repLoop
+                }
+            }
+
             _createRep(civicData, "county", key, title);
         }
     }

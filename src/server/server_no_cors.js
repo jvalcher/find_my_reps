@@ -10,21 +10,12 @@ dotenv.config()
 import express from 'express';
 import * as url from 'url';
 import path from 'path';
-//import livereload from 'livereload';
-//import connectLivereload from 'connect-livereload';
-import { getApiData } from './fetchAPI.mjs';
+import { getApiData } from './fetchAPI.js';
 import cors from 'cors';
 
 const app = express();
 const PORT = 3050;
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
-
-// livereload browser
-/*
-const liveReloadServer = livereload.createServer();
-liveReloadServer.watch(path.join(__dirname, 'src'))
-app.use(connectLivereload());
-*/
 
 //app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
@@ -35,7 +26,13 @@ app.use(cors());
 app.use('/static', express.static(path.resolve('src/public', 'static')));
 
 // fetch home page
+/*
 app.get('/*', (req, res) => {
+    res.sendFile(path.resolve('src/public', 'index.html'));
+});
+*/
+
+app.get('/', async (req, res) => {
     res.sendFile(path.resolve('src/public', 'index.html'));
 });
 
