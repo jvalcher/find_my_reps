@@ -10,8 +10,12 @@ dotenv.config()
 import express from 'express';
 import * as url from 'url';
 import path from 'path';
-import { getApiData } from './fetchAPI.js';
-import cors from 'cors';
+import bodyParser from 'body-parser';
+
+import { getApiData } from './fetchAPIdata.js';
+import { filterReps } from './filterReps.js';
+//import testResults from './testResults.json' assert {type: 'json'};
+import { scrapeImgs } from './scrapeImgs.js';
 
 const app = express();
 const PORT = 3050;
@@ -19,24 +23,20 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 //app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
-app.use(cors());
-
-// serve app
-//app.use(express.static('src/public'))
+app.use(bodyParser.json())
 app.use('/static', express.static(path.resolve('src/public', 'static')));
 
-// fetch home page
-/*
-app.get('/*', (req, res) => {
-    res.sendFile(path.resolve('src/public', 'index.html'));
-});
-*/
+// cors for local development
+import cors from 'cors';
+app.use(cors());
 
+
+// serve home page
 app.get('/', async (req, res) => {
     res.sendFile(path.resolve('src/public', 'index.html'));
 });
 
-// fetch reps from api
+// send reps data
 app.get('/representatives', async (req, res) => {
 
     const address = req.query.address;
@@ -45,10 +45,32 @@ app.get('/representatives', async (req, res) => {
     const zip = req.query.zip;
 
     const repsData = await getApiData(address, city, state, zip);
+    const filteredReps = await filterReps(repsData);
 
-    res.json(repsData);
+    res.json(filteredReps);
+});
+
+// get rep image urls
+app.post('/get-images', async (req, res) => {
+    const repUrls = await scrapeImgs(req.body.queries);
+    console.log("URLs: ")
+    console.log(repUrls);
+    res.json(repUrls);
 });
 
 app.listen(PORT, () => {
     console.log(`\nNo-CORS development server -- PORT: ${PORT}\n`);
 })
+
+// graceful shutdown
+const gracefulShutdown = async () => {
+
+    console.log("Shutting down");
+
+    app.close(() => {
+        console.log("Express server closed")
+        process.exit(0);
+    });
+}
+process.on("SIGTERM", gracefulShutdown);
+process.on("SIGINT", gracefulShutdown);

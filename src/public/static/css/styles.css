@@ -166,3 +166,64 @@ picture {
     max-width: 900px;
   }
 }
+/*------
+   Reps
+  ------*/
+#reps-header h1 {
+  margin-top: 20px;
+}
+
+#representatives {
+  display: flex;
+  flex-direction: column;
+  width: 315px;
+  background-color: #19223F;
+  border: 10px solid #3C66CE;
+  border-radius: 32px;
+  margin: 40px auto;
+  padding: 20px;
+  filter: drop-shadow(2px 2px 5px black);
+  font-family: "Alatsi";
+  color: #F4C149;
+}
+
+#address-info {
+  margin: 20px 0;
+  border: 2px solid #F4C149;
+  filter: drop-shadow(2px 2px 5px black);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#address-info p {
+  padding: 5px 0;
+  text-align: center;
+}
+
+#address-info p:nth-of-type(odd) {
+  background-color: #12172f;
+}
+
+#address-info p:nth-of-type(even) {
+  background-color: #2a3872;
+}
+
+#representatives h2 {
+  margin: 20px 0;
+  text-align: center;
+  text-decoration: underline;
+}
+
+#representatives article {
+  display: flex;
+  flex-direction: column;
+}
+
+#representatives figcaption {
+  text-align: center;
+}
+
+#representatives article p {
+  text-align: center;
+  font-style: italic;
+}

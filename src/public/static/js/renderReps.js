@@ -1,91 +1,78 @@
+import { fetchImgUrls } from './fetchImgUrls.js';
+
 // create, append representative element
-async function _createRep(civicData, level, key, title) {
+export async function renderReps(data) {
 
-    // append rep under #<level> element
-    for (let i in civicData.offices[key].officialIndices) {
+    // render address info
+    document.getElementById('my-address').innerText = data.address;
+    document.getElementById('my-county').innerText = data.county;
+    document.getElementById('my-district').innerText = data.district;
 
-        let repIndex = civicData.offices[key].officialIndices[i];
-        let repName = civicData.officials[repIndex].name;
+    // render reps under #<level> element
+    for (const key of Object.keys(data.reps)) {
+        for (const rep of data.reps[key]) {
+            
+            const title = Object.keys(rep)[0];
+            const name = Object.values(rep)[0];
+
+            document.getElementById(key).innerHTML += /*html*/ `
+                <figure>
+                    <figcaption alt=\"${title} ${name}\">${title} - ${name}</figcaption>
+                </figure>
+            `;
+        }
         
-        document.getElementById(level).innerHTML += /*html*/ `
-            <figure>
-                <figcaption>${title} - ${repName}</figcaption>
-            </figure>
-        `;
+    }
+
+    // add message to empty govt levels
+    document.querySelectorAll('article').forEach( level => {
+        if (!level.hasChildNodes()) {
+            let noReps = document.createElement('p');
+            noReps.innerText = 'None available';
+            level.appendChild(noReps);
+        }
+    });
+
+    // get rep articles elements
+    const articleElems = document.querySelectorAll('article');
+
+    for (let i = 0; i < articleElems.length; i++) {
+
+        // create rep queries for current level of govt
+        let repQueries = [];
+        const level = articleElems[i].getAttribute('id');
+        console.log(level);
+        await getQueries(repQueries, level);
+
+        // fetch rep URLs
+        try {
+            let repImgUrls = await fetchImgUrls(repQueries);
+            console.log('repImgUrls:')
+            console.log(repImgUrls[i]);
+            await setImgSrcs(repImgUrls, level);
+        } catch(err) {
+            console.error(err);
+        }     
     }
 }
 
-// append representatives to page
-export async function renderReps(civicData) {
-
-    // render congressional district
-    for (let key in civicData.divisions) {
-        if (/cd:..$/.test(key)) {
-            const congr_dist = civicData.divisions[key].name;
-            document.getElementById('district').innerText = congr_dist;
-            break;
-        }
+// create queries for scraper from figcaption alt values
+const getQueries = async (repQueries, level) => {
+    const stateReps = document.querySelector(`article#${level}`);
+    const figs = stateReps.querySelectorAll('figcaption');
+    for (let i = 0; i < figs.length; i++) {
+           repQueries.push(figs[i].getAttribute('alt'));
     }
+    return repQueries;
+}
 
-    // get state name and abbreviation
-    let state;
-    for (let key in civicData.divisions) {
-        if (/state:..$/.test(key)) {
-            state = civicData.divisions[key].name;
-            break;
-        }
-    }
-    const stateAbrev = civicData.normalizedInput.state;
-
-    // create representatives
-    repLoop:
-    for (let key in civicData.offices) {
-
-        // get current title
-        let title = civicData.offices[key].name;
-
-        // federal
-        if (title.includes("United States") || title.includes('U.S.')) {
-            _createRep(civicData, "federal", key, title);
-        }
-
-        // state
-        else if (title.includes(`${state}`) || title.includes(`${stateAbrev}`)) {
-
-            // filter reps
-            const repIgnoreFilters = [
-                'Accounts',
-                'Railroad',
-                'Land',
-                'Agriculture',
-                'Court',
-            ]
-            for (let filter of repIgnoreFilters) {
-                if (title.includes(filter)) {
-                    continue repLoop
-                }
-            }
-
-            _createRep(civicData, "state", key, title);
-        }
-
-        // county
-        else if (title.includes('County')) {
-
-            // filter reps
-            const repIgnoreFilters = [
-                'Clerk',
-                'Tax',
-                'Treasurer',
-                'District Clerk'
-            ]
-            for (let filter of repIgnoreFilters) {
-                if (title.includes(filter)) {
-                    continue repLoop
-                }
-            }
-
-            _createRep(civicData, "county", key, title);
-        }
+// append rep images to figure at <level> of government
+const setImgSrcs = async (srcs, level) => {
+    const stateReps = document.querySelector(`article#${level}`);
+    const figs = stateReps.querySelectorAll('figure');
+    for (let i = 0; i < figs.length; i++) {
+        const img = document.createElement('img');
+        img.setAttribute('src', srcs[i]);
+        figs[i].appendChild(img);
     }
 }

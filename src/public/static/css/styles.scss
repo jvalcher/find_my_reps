@@ -23,6 +23,10 @@ $form-bg-color: #19223F;
 $form-border-color: #3C66CE;
 $button-bg-color: #F4C149;
 $button-fg-color: black;
+$reps-font-color: #F4C149;
+$reps-even-addr-bg: #2a3872;
+$reps-odd-addr-bg: #12172f;
+$reps-border-color: #F4C149;
 
 
 /*-------
@@ -33,6 +37,7 @@ $button-fg-color: black;
 $home-header-font: 'Poppins', sans-serif;
 
 @import url('https://fonts.googleapis.com/css2?family=Alatsi&display=swap');$main-form-font: 'Alatsi';
+$reps-font: 'Alatsi';
 
 
 /*-------------
@@ -182,4 +187,69 @@ picture {
   }
 }
 @media screen and (min-width: 1400px) {
+}
+
+
+
+/*------
+   Reps
+  ------*/
+
+#reps-header h1 {
+  margin-top: 20px;
+}
+
+#representatives {
+  display: flex;
+  flex-direction: column;
+  width: 315px;
+  background-color: $form-bg-color;
+  border: 10px solid $form-border-color;
+  border-radius: 32px;
+  margin: 40px auto;
+  padding: 20px;
+  filter: drop-shadow(2px 2px 5px black);
+  font-family: $reps-font;
+  color: $reps-font-color;
+}
+
+#address-info {
+  margin: 20px 0;
+  border: 2px solid $reps-border-color;
+  filter: drop-shadow(2px 2px 5px black);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+#address-info p {
+  padding: 5px 0;
+  text-align: center;
+}
+
+#address-info p:nth-of-type(odd) {
+  background-color: $reps-odd-addr-bg;
+}
+
+#address-info p:nth-of-type(even) {
+  background-color: $reps-even-addr-bg;
+}
+
+#representatives h2 {
+  margin: 20px 0;
+  text-align: center;
+  text-decoration: underline;
+}
+
+#representatives article {
+  display: flex;
+  flex-direction: column;
+}
+
+#representatives figcaption {
+  text-align: center;
+}
+
+#representatives article p {
+  text-align: center;
+  font-style: italic;
 }

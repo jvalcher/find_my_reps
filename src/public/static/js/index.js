@@ -91,9 +91,9 @@ const listenForAddressAndRender = () => {
                 }
 
                 // get API data
-                let apiData;
+                let repsData;
                 try {
-                    apiData = await getRepData(
+                    repsData = await getRepData(
                         formData.address, 
                         formData.city, 
                         formData.state, 
@@ -104,7 +104,7 @@ const listenForAddressAndRender = () => {
                 }
 
                 await navigateTo('/reps');  // navigate to reps page
-                await renderReps(apiData);  // render reps info
+                await renderReps(repsData);  // render reps info
             });
         }
         if (addressFormLoadAttempts <= 0) clearInterval(addressFormLoadAttempts);

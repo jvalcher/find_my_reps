@@ -1,5 +1,5 @@
 node_modules
 .env
 .cache
-test.js
+test*
 api_tests.http

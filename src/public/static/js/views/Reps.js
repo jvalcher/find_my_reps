@@ -13,22 +13,23 @@ export default class extends Main {
                 <img src="static/images/us_flag_ellipse__112x118.png">
             </header>
             <main>
-
-                <!-- TODO
-                <script async src="https://cse.google.com/cse.js?cx=d7754debecb4b4c6d">
-                </script>
-                <div class="gcse-search"></div>
-                -->
-
                 <section id="representatives">
-                    <h2>Representatives</h2>
-                    <h3 id="district"></h3>
-                    <h4>Federal</h4>
+
+                    <div id="address-info">
+                        <p id="my-address"></p>
+                        <p id="my-county"></p>
+                        <p id="my-district"></p>
+                    </div>
+
+                    <h2>Federal</h2>
                     <article id="federal"></article>
-                    <h4>State</h4>
+                    <h2>State</h2>
                     <article id="state"></article>
-                    <h4>County</h4>
+                    <h2>City</h2>
+                    <article id="city"></article>
+                    <h2>County</h2>
                     <article id="county"></article>
+
                 </section>
             </main>
         `;
