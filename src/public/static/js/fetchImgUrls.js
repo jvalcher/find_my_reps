@@ -1,21 +1,17 @@
-
-export const fetchImgUrls = async (repQueries) => {
-
-    const queryObj = {
-        queries: repQueries
+const createFetches = async(queries) => {
+    let fetches = [];
+    for (const i in queries) {
+        const f = fetch(`http://localhost:1235/imgUrls/${queries[i]}`, {
+                }).then((res) => {
+                    return res.text()
+                });
+        fetches.push(f);
     }
+    return fetches
+}
 
-    try {
-        const data = await fetch('http://localhost:3050/get-images', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(queryObj)
-        });
-    } catch(err) {
-        console.error(err);
-    }
-
+export const fetchImgUrls = async(queries) => {
+    const response = await createFetches(queries);
+    const data = Promise.all(response);
     return data;
 }

@@ -5,8 +5,8 @@ export async function renderReps(data) {
 
     // render address info
     document.getElementById('my-address').innerText = data.address;
-    document.getElementById('my-county').innerText = data.county;
-    document.getElementById('my-district').innerText = data.district;
+    if (data.county) document.getElementById('my-county').innerText = data.county;
+    if (data.district) document.getElementById('my-district').innerText = data.district;
 
     // render reps under #<level> element
     for (const key of Object.keys(data.reps)) {
@@ -17,19 +17,17 @@ export async function renderReps(data) {
 
             document.getElementById(key).innerHTML += /*html*/ `
                 <figure>
-                    <figcaption alt=\"${title} ${name}\">${title} - ${name}</figcaption>
+                    <figcaption class="rep-caption" alt=\"${title} ${name}\">${title} - ${name}</figcaption>
                 </figure>
             `;
         }
         
     }
 
-    // add message to empty govt levels
+    // remove title of sections with no reps
     document.querySelectorAll('article').forEach( level => {
         if (!level.hasChildNodes()) {
-            let noReps = document.createElement('p');
-            noReps.innerText = 'None available';
-            level.appendChild(noReps);
+            level.previousElementSibling.style.display = 'none';
         }
     });
 
@@ -41,14 +39,11 @@ export async function renderReps(data) {
         // create rep queries for current level of govt
         let repQueries = [];
         const level = articleElems[i].getAttribute('id');
-        console.log(level);
         await getQueries(repQueries, level);
 
         // fetch rep URLs
         try {
             let repImgUrls = await fetchImgUrls(repQueries);
-            console.log('repImgUrls:')
-            console.log(repImgUrls[i]);
             await setImgSrcs(repImgUrls, level);
         } catch(err) {
             console.error(err);
@@ -73,6 +68,7 @@ const setImgSrcs = async (srcs, level) => {
     for (let i = 0; i < figs.length; i++) {
         const img = document.createElement('img');
         img.setAttribute('src', srcs[i]);
-        figs[i].appendChild(img);
+        const caption = figs[i].querySelector(`.rep-caption`);
+        figs[i].insertBefore(img, caption);
     }
 }

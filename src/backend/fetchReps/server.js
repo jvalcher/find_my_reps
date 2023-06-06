@@ -30,7 +30,6 @@ app.use('/static', express.static(path.resolve('src/public', 'static')));
 import cors from 'cors';
 app.use(cors());
 
-
 // serve home page
 app.get('/', async (req, res) => {
     res.sendFile(path.resolve('src/public', 'index.html'));
