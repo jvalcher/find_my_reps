@@ -9,7 +9,7 @@ export default class extends Main {
     async getHtml() {
         return /*html*/ `
             <header id="reps-header">
-                <h1>My representatives</h1>
+                <a href="/" data-link><h1>My representatives</h1></a>
                 <img src="static/images/us_flag_ellipse__112x118.png">
             </header>
             <main>

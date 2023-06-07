@@ -77,38 +77,37 @@ body {
 
 header {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
+  flex-wrap: wrap;
   align-items: center;
-  width: 100%;
+  width: fit-content;
+  margin: auto;
 }
 header h1 {
   text-align: center;
   font-family: $home-header-font;
-  font-size: 2rem;
+  font-size: 2.5rem;
   line-height: 51px;
 }
 header img {
-  width: 112px;
-  margin-top: 20px;
+  margin-left: 30px;
+  width: 70px;
 }
 @media screen and (min-width: 660px) {
   header h1 {
-    font-size: 2.5rem;
+    font-size: 3rem;
   }
 }
 @media screen and (min-width: 775px) {
   header h1 {
-    font-size: 3rem;
-    margin: 50px auto 75px;
-  }
-  header img {
-    display: none;
+    font-size: 3.5rem;
+    margin: 30px auto 30px;
   }
 }
 @media screen and (min-width: 1100px) {
   header h1 {
-    font-size: 3.5rem;
+    font-size: 4rem;
   }
 }
 
@@ -195,26 +194,9 @@ picture {
    Reps
   ------*/
 
-#reps-header h1 {
-  margin-top: 20px;
-}
-
-#representatives {
-  display: flex;
-  flex-direction: column;
-  width: 315px;
-  background-color: $form-bg-color;
-  border: 10px solid $form-border-color;
-  border-radius: 32px;
-  margin: 40px auto;
-  padding: 20px;
-  filter: drop-shadow(2px 2px 5px black);
-  font-family: $reps-font;
-  color: $reps-font-color;
-}
-
 #address-info {
   margin: 20px 0;
+  width: 350px;
   border: 2px solid $reps-border-color;
   filter: drop-shadow(2px 2px 5px black);
   border-radius: 10px;
@@ -234,6 +216,18 @@ picture {
   background-color: $reps-even-addr-bg;
 }
 
+#representatives {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  margin: 20px auto;
+  padding: 20px;
+  filter: drop-shadow(2px 2px 5px black);
+  font-family: $reps-font;
+  color: $reps-font-color;
+}
+
 #representatives h2 {
   margin: 20px 0;
   text-align: center;
@@ -242,11 +236,59 @@ picture {
 
 #representatives article {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 90%;
 }
 
+#representatives figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 350px;
+  width: 275px;
+}
+
+.rep-img-div {
+  width: 200px;
+  height: 250px;
+  margin-bottom: 20px;
+  border: 2px solid;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.loader {
+  position: absolute; 
+  border: 16px solid #f3f3f3; /* Light grey */
+  border-top: 16px solid #3498db; /* Blue */
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  animation: spin 2s linear infinite;
+  margin: 45px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.rep-img-div img {
+  //position: absolute; 
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+  
 #representatives figcaption {
   text-align: center;
+  margin-bottom: 20px;
+}
+
+#representatives figcaption:first-of-type {
+  margin-bottom: 5px;
 }
 
 #representatives article p {

@@ -4,8 +4,8 @@
 
 'use strict';
 
-import * as dotenv from 'dotenv';
-dotenv.config()
+import dotenv from 'dotenv';
+dotenv.config();
 
 import express from 'express';
 import * as url from 'url';
@@ -15,7 +15,6 @@ import bodyParser from 'body-parser';
 import { getApiData } from './fetchAPIdata.js';
 import { filterReps } from './filterReps.js';
 //import testResults from './testResults.json' assert {type: 'json'};
-import { scrapeImgs } from './scrapeImgs.js';
 
 const app = express();
 const PORT = 3050;
@@ -47,14 +46,6 @@ app.get('/representatives', async (req, res) => {
     const filteredReps = await filterReps(repsData);
 
     res.json(filteredReps);
-});
-
-// get rep image urls
-app.post('/get-images', async (req, res) => {
-    const repUrls = await scrapeImgs(req.body.queries);
-    console.log("URLs: ")
-    console.log(repUrls);
-    res.json(repUrls);
 });
 
 app.listen(PORT, () => {

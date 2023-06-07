@@ -17,7 +17,9 @@ export async function renderReps(data) {
 
             document.getElementById(key).innerHTML += /*html*/ `
                 <figure>
-                    <figcaption class="rep-caption" alt=\"${title} ${name}\">${title} - ${name}</figcaption>
+                    <div class='rep-img-div'><div class="loader"></div><img class='rep-img' src="static/images/blue.png"></div>
+                    <figcaption class="rep-caption" alt=\"${title} ${name}\">${name}</figcaption>
+                    <figcaption class="rep-caption" >${title}</figcaption>
                 </figure>
             `;
         }
@@ -66,9 +68,8 @@ const setImgSrcs = async (srcs, level) => {
     const stateReps = document.querySelector(`article#${level}`);
     const figs = stateReps.querySelectorAll('figure');
     for (let i = 0; i < figs.length; i++) {
-        const img = document.createElement('img');
-        img.setAttribute('src', srcs[i]);
-        const caption = figs[i].querySelector(`.rep-caption`);
-        figs[i].insertBefore(img, caption);
+        const img = figs[i].querySelector('img');
+        img.src = srcs[i];
+        figs[i].querySelector('.loader').style.display = 'none';
     }
 }

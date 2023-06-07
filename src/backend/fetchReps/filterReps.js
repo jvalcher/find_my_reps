@@ -14,6 +14,7 @@ export async function filterReps(civicData) {
         }
     };
 
+
     // add address, city
     const a = civicData.normalizedInput;
     data.address = `${a.line1}, ${a.city}, ${a.state} ${a.zip}`;
