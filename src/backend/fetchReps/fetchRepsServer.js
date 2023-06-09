@@ -4,14 +4,12 @@
 
 'use strict';
 
-import dotenv from 'dotenv';
-dotenv.config();
-
+import 'dotenv/config'
 import express from 'express';
 import * as url from 'url';
 import path from 'path';
 import bodyParser from 'body-parser';
-
+import cors from 'cors';
 import { getApiData } from './fetchAPIdata.js';
 import { filterReps } from './filterReps.js';
 //import testResults from './testResults.json' assert {type: 'json'};
@@ -21,18 +19,12 @@ const PORT = 3050;
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 //app.use(express.urlencoded({ extended: false }));
+app.use(cors());
 app.use(express.json());
 app.use(bodyParser.json())
-app.use('/static', express.static(path.resolve('src/public', 'static')));
 
-// cors for local development
-import cors from 'cors';
-app.use(cors());
-
-// serve home page
-app.get('/', async (req, res) => {
-    res.sendFile(path.resolve('src/public', 'index.html'));
-});
+// main page
+app.use('/', express.static(path.join(__dirname, '../../public')));
 
 // send reps data
 app.get('/representatives', async (req, res) => {
@@ -42,6 +34,8 @@ app.get('/representatives', async (req, res) => {
     const state = req.query.state;
     const zip = req.query.zip;
 
+    console.log(`${address} ${city} ${state} ${zip}`);
+
     const repsData = await getApiData(address, city, state, zip);
     const filteredReps = await filterReps(repsData);
 
@@ -49,7 +43,7 @@ app.get('/representatives', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`\nNo-CORS development server -- PORT: ${PORT}\n`);
+    console.log(`\nFetch reps server - PORT: ${PORT}\n`);
 })
 
 // graceful shutdown

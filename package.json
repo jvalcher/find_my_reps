@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "front": "live-server --host=127.0.0.1 --port=5500 --open=./src/public/",
-    "fetch-reps": "nodemon src/backend/fetchReps/server.js",
-    "scrape-imgs": "cd src/backend/scrapeImgUrl && . venv/bin/activate && waitress-serve --listen=localhost:1235 scrape:app"
+    "fetch-reps": "pm2 start src/backend/fetchReps/fetchRepsServer.js",
+    "fetchRepImg": "cd src/backend/scrapeImgUrl && . venv/bin/activate && pm2 start start.sh --name=fetchRepImgUrl"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,7 @@
     "cors": "^2.8.5",
     "dotenv-cli": "^7.1.0",
     "es-main": "^1.2.0",
-    "live-server": "^1.2.2",
+    "live-server": "^1.1.0",
     "nodemon": "^2.0.21"
   },
   "dependencies": {

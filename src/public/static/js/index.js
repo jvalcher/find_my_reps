@@ -19,7 +19,7 @@ const router = async () => {
             isMatch: location.pathname === route.path
         }
     });
-    const match = matches.find((matches) => matches.isMatch);
+    let match = matches.find((matches) => matches.isMatch);
 
     // if path not a route, default to home
     if (!match) {

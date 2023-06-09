@@ -2,7 +2,7 @@
  // fetch data from server
 export async function getRepData(address, city, state, zip) {
 
-    const URL = 'http://localhost:3050/representatives';
+    const URL = 'https://jeffvalcher.com/representatives';
     const QUERY = `?address=${address}&city=${city}&state=${state}&zip=${zip}`;
 
     try {

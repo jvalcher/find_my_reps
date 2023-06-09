@@ -1,7 +1,7 @@
 const createFetches = async(queries) => {
     let fetches = [];
     for (const i in queries) {
-        const f = fetch(`http://localhost:1235/imgUrls/${queries[i]}`, {
+        const f = fetch(`https://jeffvalcher.com/fetchrepimages/${queries[i]}`, {
                 }).then((res) => {
                     return res.text()
                 });
