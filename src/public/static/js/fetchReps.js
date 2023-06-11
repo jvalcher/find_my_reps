@@ -1,8 +1,9 @@
+import { env } from './env.mjs';
 
  // fetch data from server
 export async function getRepData(address, city, state, zip) {
 
-    const URL = 'https://jeffvalcher.com/representatives';
+    const URL = env.FETCH_REPS;
     const QUERY = `?address=${address}&city=${city}&state=${state}&zip=${zip}`;
 
     try {

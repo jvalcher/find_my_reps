@@ -3,8 +3,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
-import atexit
-
+import traceback
+import logging
 
 app = Flask(__name__)
 
@@ -16,20 +16,21 @@ async def fetchImgUrls(query):
     return response
 
 async def fetch_img_url(query):
+
     url = f"https://www.google.com/search?site=&tbm=isch&source=hp&biw=1873&bih=990&q={query}"
+
     chrome_options = webdriver.ChromeOptions()
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
-    chrome_options.add_argument('--no-sandbox')
-    '''
-    sec_ch_ua = '"Examplary Browser"; v="73", ";Not?A.Brand"; v="27"'
-    options.add_argument(f'--sec-ch-ua={sec_ch_ua}')
-    options.add_argument("--disable-xss-auditor")
-    '''
+    chrome_options.add_argument('--incognito')
     driver = webdriver.Chrome(ChromeDriverManager().install(), options=chrome_options)
-    driver.get(url)
-    img = driver.find_element(By.CLASS_NAME, 'Q4LuWd')
-    img_url = img.get_attribute('src')
-    driver.quit()
-    return img_url
 
+    try:
+        driver.get(url)
+        img = driver.find_element(By.CLASS_NAME, 'Q4LuWd')
+        img_url = img.get_attribute('src')
+        return img_url
+    except Exception as e:
+        logging.error(traceback.format_exc())
+    finally:
+        driver.quit();

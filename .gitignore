@@ -1,6 +1,8 @@
 node_modules
 .env
+env.mjs
 .cache
 test*
 api_tests.http
 venv
+__pycache__

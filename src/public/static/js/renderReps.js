@@ -17,7 +17,7 @@ export async function renderReps(data) {
 
             document.getElementById(key).innerHTML += /*html*/ `
                 <figure>
-                    <div class='rep-img-div'><div class="loader"></div><img class='rep-img' src="static/images/blue.png"></div>
+                    <div class='rep-img-div'><div class="loader"></div><img class='rep-img' src="/reps/static/images/blue.png"></div>
                     <figcaption class="rep-caption" alt=\"${title} ${name}\">${name}</figcaption>
                     <figcaption class="rep-caption" >${title}</figcaption>
                 </figure>
@@ -39,9 +39,8 @@ export async function renderReps(data) {
     for (let i = 0; i < articleElems.length; i++) {
 
         // create rep queries for current level of govt
-        let repQueries = [];
         const level = articleElems[i].getAttribute('id');
-        await getQueries(repQueries, level);
+        let repQueries = await getQueries(level);
 
         // fetch rep URLs
         try {
@@ -54,19 +53,23 @@ export async function renderReps(data) {
 }
 
 // create queries for scraper from figcaption alt values
-const getQueries = async (repQueries, level) => {
+const getQueries = async (level) => {
+    let repQueries = [];
     const stateReps = document.querySelector(`article#${level}`);
     const figs = stateReps.querySelectorAll('figcaption');
     for (let i = 0; i < figs.length; i++) {
-           repQueries.push(figs[i].getAttribute('alt'));
+        let query = figs[i].getAttribute('alt');
+        if (query) {
+            repQueries.push(query);
+        }
     }
     return repQueries;
 }
 
 // append rep images to figure at <level> of government
 const setImgSrcs = async (srcs, level) => {
-    const stateReps = document.querySelector(`article#${level}`);
-    const figs = stateReps.querySelectorAll('figure');
+    const repLevel = document.querySelector(`article#${level}`);
+    const figs = repLevel.querySelectorAll('figure');
     for (let i = 0; i < figs.length; i++) {
         const img = figs[i].querySelector('img');
         img.src = srcs[i];

@@ -10,7 +10,7 @@ export default class extends Main {
         return /*html*/ `
             <header id="search-header">
                 <h1>Find my representatives</h1>
-                <img src="static/images/us_flag_ellipse__112x118.png">
+                <img id="home-img" src="static/images/us_flag_ellipse__112x118.png">
             </header>
             <main>
                 <section id="search">

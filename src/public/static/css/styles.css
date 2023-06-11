@@ -57,9 +57,13 @@ header {
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
-  width: -moz-fit-content;
   width: fit-content;
   margin: auto;
+}
+
+header a {
+  text-decoration: none;
+  color: #ffffff;
 }
 
 header h1 {
@@ -77,6 +81,11 @@ header img {
 @media screen and (min-width: 660px) {
   header h1 {
     font-size: 3rem;
+  }
+}
+@media screen and (min-width: 775px) {
+  #home-img {
+    display: none;
   }
 }
 @media screen and (min-width: 775px) {
@@ -256,8 +265,7 @@ picture {
 .rep-img-div img {
   width: 100%;
   height: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  object-fit: cover;
 }
 
 #representatives figcaption {
@@ -273,3 +281,5 @@ picture {
   text-align: center;
   font-style: italic;
 }
+
+/*# sourceMappingURL=styles.css.map */

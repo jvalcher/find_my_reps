@@ -9,8 +9,8 @@ export default class extends Main {
     async getHtml() {
         return /*html*/ `
             <header id="reps-header">
-                <a href="/" data-link><h1>My representatives</h1></a>
-                <img src="static/images/us_flag_ellipse__112x118.png">
+                <a href="/reps" data-link><h1>My representatives</h1></a>
+                <img src="/reps/static/images/us_flag_ellipse__112x118.png">
             </header>
             <main>
                 <section id="representatives">

@@ -1,7 +1,9 @@
+import { env } from './env.mjs';
+
 const createFetches = async(queries) => {
     let fetches = [];
     for (const i in queries) {
-        const f = fetch(`https://jeffvalcher.com/fetchrepimages/${queries[i]}`, {
+        const f = fetch(`${env.HOST_SCRAPE}/${queries[i]}`, {
                 }).then((res) => {
                     return res.text()
                 });
@@ -10,7 +12,7 @@ const createFetches = async(queries) => {
     return fetches
 }
 
-export const fetchImgUrls = async(queries) => {
+export const fetchImgUrls = async (queries) => {
     const response = await createFetches(queries);
     const data = Promise.all(response);
     return data;

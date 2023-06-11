@@ -1,2 +1,2 @@
 #!/bin/bash
-waitress-serve --threads=6 --host=localhost --port=1235 scrape:app
+waitress-serve --threads=4 --host=localhost --port=1235 scrape:app
