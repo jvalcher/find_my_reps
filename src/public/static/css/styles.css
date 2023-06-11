@@ -57,6 +57,7 @@ header {
   justify-content: center;
   flex-wrap: wrap;
   align-items: center;
+  width: -moz-fit-content;
   width: fit-content;
   margin: auto;
 }
@@ -265,7 +266,8 @@ picture {
 .rep-img-div img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 
 #representatives figcaption {
@@ -281,5 +283,3 @@ picture {
   text-align: center;
   font-style: italic;
 }
-
-/*# sourceMappingURL=styles.css.map */
