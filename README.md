@@ -1,11 +1,8 @@
 # Find my representatives
 See federal, state, and local political representatives for any U.S. address
 
-<hr>
 <img src='src/public/static/images/readme1.png' height='250px'>
-<br>
 <img src='src/public/static/images/readme2.png' height='300px'>
-<hr>
 
 ## Frameworks, libraries, et al.
 A vanilla JavaScript, single-page application with a backend using:
