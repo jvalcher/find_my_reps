@@ -19,14 +19,6 @@ Clone repo
 ```
 git clone git@github.com:jvalcher/civics_data.git
 ```
-Install dependencies
-```
-npm install
-```
-Set up python virtual environment
-```
-npm run pyvenv
-```
 Get a free [Google Civic Info API key](https://developers.google.com/civic-information/docs/using_api) and insert it into a `.env` file in the root of the project
 ```
 API_KEY="abcdefg123456789"
@@ -35,25 +27,34 @@ Create an `env.mjs` file in the root directory for the client-side routes to the
 ```
 export const env = {
 
-    // fetchImgUrls.js  -> scrapeImgUrl/scrape.py  (port 1235)
-    HOST_SCRAPE: "https://mysite.com/scraperoute", 
-
-    // fetchReps.js -> fetchReps/fetchRepsServer.js (port 3050)
+    // fetchReps.js -> fetchReps/fetchRepsServer.js
     FETCH_REPS: "https://mysite.com/repsroute",    
+
+    // fetchImgUrls.js  -> scrapeImgUrl/scrape.py
+    HOST_SCRAPE: "https://mysite.com/scraperoute", 
 }
 ```
-Copy file to proper location:
+Proxy routes :
+- /reps/        -> http://localhost:3050/
+- /repsroute    -> http://localhost:3050/representatives
+- /scraperoute/ -> http://localhost:1235/imgUrls/
+* match last two with `env.mjs` config
+
+Run config
 ```
-npm run copyclientenv
+npm run config
 ```
 Start servers
 ```
-npm run fetchreps
-npm run scraperepimages
+npm start
+```
+View site
+```
+https:mysite.com/reps
 ```
 View server logs
 ```
-npm run serverlogs
+npm run logs
 ```
 ## Live example
 - [jeffvalcher.com/reps](https://jeffvalcher.com/reps)  
