@@ -1,4 +1,4 @@
-export async function filterReps(civicData) {
+export const filterReps = async (civicData) => {
 
     let data = {
         'address': undefined,
@@ -14,7 +14,6 @@ export async function filterReps(civicData) {
         }
     };
 
-
     // add address, city
     const a = civicData.normalizedInput;
     data.address = `${a.line1}, ${a.city}, ${a.state} ${a.zip}`;
@@ -22,11 +21,11 @@ export async function filterReps(civicData) {
 
     // add state, county, district
     let state;
-    const regexState = new RegExp('state:..$');
-    const regexCounty = new RegExp('county:[a-z]+$');
-    const regexDistrict = new RegExp('cd:.{1,2}$');
-
     for (let key in civicData.divisions) {
+
+        const regexState = new RegExp('state:..$');
+        const regexCounty = new RegExp('county:[a-z]+$');
+        const regexDistrict = new RegExp('cd:.{1,2}$');
 
         if (regexCounty.test(key)) {
             data.county = civicData.divisions[key].name;
@@ -78,7 +77,6 @@ export async function filterReps(civicData) {
             // county
             else if (regexCountyReps.test(divId)) {
 
-                // filter reps
                 const repIgnoreFilters = [
                     'Clerk',
                     'Tax',
@@ -118,7 +116,6 @@ export async function filterReps(civicData) {
             // state
             else if (regexStateReps.test(divId)) {
 
-                // filter reps
                 const repIgnoreFilters = [
                     'Accounts',
                     'Railroad',
@@ -144,10 +141,6 @@ export async function filterReps(civicData) {
 
         }
     }
-
-    // add rep image URLs
-    //const repsData = await fetchRepImgUrls(data);
-    //return repsData;
 
     return data;
 }
