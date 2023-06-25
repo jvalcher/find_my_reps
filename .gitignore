@@ -6,3 +6,5 @@ test*
 api_tests.http
 venv
 __pycache__
+*.http
+CHANGES.md
