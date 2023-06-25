@@ -81,7 +81,9 @@ export const filterReps = async (civicData) => {
                     'Clerk',
                     'Tax',
                     'Treasurer',
-                    'District Clerk'
+                    'District Clerk',
+                    'Highway',
+                    'Town'
                 ]
                 for (let filter of repIgnoreFilters) {
                     if (title.includes(filter)) {

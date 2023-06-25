@@ -37,11 +37,11 @@ export async function renderReps(data) {
 
     // create rep queries for current level of govt
     const level = articleElems[i].getAttribute("id");   // federal
-    let repQueries = await getQueries(level);
+    const repQueries = await getQueries(level);
 
     // fetch rep URLs
     try {
-      let repImgUrls = await fetchImgUrls(repQueries);
+      const repImgUrls = await fetchImgUrls(repQueries);
       await setImgSrcs(repImgUrls, level);
     } catch (err) {
       console.error(err);
@@ -50,7 +50,7 @@ export async function renderReps(data) {
 }
 
 // create queries for scraper from figcaption alt values
-const getQueries = async level => {
+const getQueries = async (level) => {
   let repQueries = [];
   const stateReps = document.querySelector(`article#${level}`);
   const figs = stateReps.querySelectorAll("figcaption");
