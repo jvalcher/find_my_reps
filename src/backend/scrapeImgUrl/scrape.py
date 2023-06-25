@@ -27,6 +27,7 @@ async def fetch_img_url(query):
 
     try:
         driver.get(url)
+        driver.implicitly_wait(5);
         img = driver.find_element(By.CLASS_NAME, 'Q4LuWd')
         img_url = img.get_attribute('src')
         return img_url
