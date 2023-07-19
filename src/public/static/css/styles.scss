@@ -128,7 +128,9 @@ header img {
 
 main {
   display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 #search {
   display: flex;
@@ -200,6 +202,17 @@ picture {
 /*------
    Reps
   ------*/
+
+#note {
+  margin-top: 20px;
+  font-family: $reps-font;
+  color: $reps-font-color;
+  font-size: 1.5rem;
+  width: 90%;
+  text-align: center;
+  line-height: 2rem;
+  letter-spacing: 2px;
+}
 
 #address-info {
   margin: 20px 0;

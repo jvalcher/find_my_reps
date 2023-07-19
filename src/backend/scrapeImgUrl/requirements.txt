@@ -4,3 +4,4 @@ pip-chill==1.0.3
 pysocks==1.7.1
 selenium==4.9.1
 waitress==2.1.2
+chromedriver-binary==114.0.5735.90.0

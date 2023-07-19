@@ -5,11 +5,11 @@ import { renderReps } from './renderReps.js';
 
 
 // page router
-const router = async () => {
+const router = async (path) => {
 
     const routes = [
-        { path: '/', view: Search },
-        { path: '/reps', view: Reps}
+        { path: '/',      view: Search },
+        { path: '/reps',  view: Reps}
     ];
 
     // match pathname with route
