@@ -1,4 +1,4 @@
-import { fetchImgUrls } from "./fetchImgUrls.js";
+import { fetchImg } from "./fetchImg.js";
 
 // create, append representative element
 export async function renderReps(data) {
@@ -30,21 +30,23 @@ export async function renderReps(data) {
     }
   });
 
-  // get rep articles elements
-  const articleElems = document.querySelectorAll("article");
 
+
+  // render reps
+  const articleElems = document.querySelectorAll("article");
   for (let i = 0; i < articleElems.length; i++) {
 
-    // create rep queries for current level of govt
     const level = articleElems[i].getAttribute("id");   // federal
-    const repQueries = await getQueries(level);
+    const queries = await getQueries(level);  // ["rep1", "rep2", ...]
+    const figElems = articleElems[i].querySelectorAll("figure");
 
-    // fetch rep URLs
-    try {
-      const repImgUrls = await fetchImgUrls(repQueries);
-      await setImgSrcs(repImgUrls, level);
-    } catch (err) {
-      console.error(err);
+    for (let i = 0; i < figElems.length; i++) {
+      try {
+        const repImg = await fetchImg(queries[i]);
+        await setImgSrc(repImg, figElems[i]);
+      } catch (err) {
+        console.error(err);
+      }
     }
   }
 }
@@ -63,13 +65,9 @@ const getQueries = async (level) => {
   return repQueries;
 };
 
-// append rep images to figure at <level> of government
-const setImgSrcs = async (srcs, level) => {
-  const repLevel = document.querySelector(`article#${level}`);
-  const figs = repLevel.querySelectorAll("figure");
-  for (let i = 0; i < figs.length; i++) {
-    const img = figs[i].querySelector("img");
-    img.src = srcs[i];
-    figs[i].querySelector(".loader").style.display = "none";
-  }
+// append rep image to figure src
+const setImgSrc = async (imgSrc, fig) => {
+  const image = fig.querySelector("img");
+  image.src = imgSrc;
+  fig.querySelector(".loader").style.display = "none";
 };

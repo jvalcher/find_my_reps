@@ -1,6 +1,6 @@
 import Search from './views/Search.js';
 import Reps from './views/Reps.js';
-import { getRepData } from './fetchReps.js';
+import { fetchRepsData } from './fetchRepsData.js';
 import { renderReps } from './renderReps.js';
 
 
@@ -93,7 +93,7 @@ const listenForAddressAndRender = () => {
                 // get API data
                 let repsData;
                 try {
-                    repsData = await getRepData(
+                    repsData = await fetchRepsData(
                         formData.address, 
                         formData.city, 
                         formData.state, 
