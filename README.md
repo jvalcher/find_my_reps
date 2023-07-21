@@ -1,5 +1,9 @@
 # Find my representatives
+
 See federal, state, and local political representatives for any U.S. address
+### [Live demo 🔗](https://jeffvalcher.com/reps)
+
+## Screenshots
 
 <img src='src/public/static/images/readme1.png' height='250px'>
 <img src='src/public/static/images/readme2.png' height='300px'>
@@ -17,6 +21,3 @@ A vanilla JavaScript, single-page application with a backend using:
 ## Data sources
 - Google Civic Information API
 - Google Images
-
-## Live example
-- [jeffvalcher.com/reps](https://jeffvalcher.com/reps)  
