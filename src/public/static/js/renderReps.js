@@ -2,24 +2,25 @@ import { fetchImg } from "./fetchImg.js";
 
 // create, append representative element
 export async function renderReps(data) {
+
   // render address info
   document.getElementById("my-address").innerText = data.address;
   if (data.county) document.getElementById("my-county").innerText = data.county;
   if (data.district) document.getElementById("my-district").innerText = data.district;
 
-  // render reps under #<level> element
+  // insert rep elements under #<level_of_gov>
   for (const key of Object.keys(data.reps)) {
     for (const rep of data.reps[key]) {
       const title = Object.keys(rep)[0];
       const name = Object.values(rep)[0];
 
-      document.getElementById(key).innerHTML += /*html*/ `
-                <figure>
-                    <div class='rep-img-div'><div class="loader"></div><img class='rep-img' src="/reps/static/images/blue.png"></div>
-                    <figcaption class="rep-caption" alt=\"${title} ${name}\">${name}</figcaption>
-                    <figcaption class="rep-caption" >${title}</figcaption>
-                </figure>
-            `;
+      document.getElementById(key).innerHTML += `
+          <figure>
+              <div class='rep-img-div'><div class="loader"></div><img class="rep-img" src="/reps/static/images/blue.png"></div>
+              <figcaption class="rep-caption" alt="${title} ${name}">${name}</figcaption>
+              <figcaption class="rep-caption" >${title}</figcaption>
+          </figure>
+      `;
     }
   }
 
@@ -30,14 +31,13 @@ export async function renderReps(data) {
     }
   });
 
-
-
-  // render reps
+  // fetch, insert rep images
   const articleElems = document.querySelectorAll("article");
+
   for (let i = 0; i < articleElems.length; i++) {
 
     const level = articleElems[i].getAttribute("id");   // federal
-    const queries = await getQueries(level);  // ["rep1", "rep2", ...]
+    const queries = await getQueries(level);            // ["rep1", "rep2", ...]
     const figElems = articleElems[i].querySelectorAll("figure");
 
     for (let i = 0; i < figElems.length; i++) {
@@ -51,7 +51,7 @@ export async function renderReps(data) {
   }
 }
 
-// create queries for scraper from figcaption alt values
+// create image scraper queries from figcaption alt values
 const getQueries = async (level) => {
   let repQueries = [];
   const stateReps = document.querySelector(`article#${level}`);
@@ -65,7 +65,7 @@ const getQueries = async (level) => {
   return repQueries;
 };
 
-// append rep image to figure src
+// add rep image src to figure
 const setImgSrc = async (imgSrc, fig) => {
   const image = fig.querySelector("img");
   image.src = imgSrc;

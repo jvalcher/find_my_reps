@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "copyclientenv": "cp env.mjs src/public/static/js/",
-    "pyvenv": "python3 -m pip install --user --upgrade pip && python3 -m pip install --user virtualenv && cd src/backend/scrapeImgUrl && python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt",
+    "configPyEnv": "python3 -m pip install --user --upgrade pip && python3 -m pip install --user virtualenv && cd src/backend/scrapeImgUrl && python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt",
     "config": "npm install && npm run copyclientenv && npm run pyvenv",
     "fetchreps": "printf 'Express fetch reps server running on port 3050...\n' && pm2 start src/backend/fetchReps/fetchRepsServer.js",
     "scraperepimages": "printf 'Flask image scraper running on port 1235...\n' && cd src/backend/scrapeImgUrl && . venv/bin/activate && pm2 start start.sh --name=scrapeRepImages",

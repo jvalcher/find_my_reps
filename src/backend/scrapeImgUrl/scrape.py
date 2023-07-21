@@ -32,8 +32,7 @@ async def fetch_img_helper(query, url):
         img = img.get_attribute('src')
         return img
     except Exception as e:
-        print(f'Failed to fetch image: {e}')
-        return 'Failed to fetch image'
+        print(f'Failed to fetch image: \n{e}')
 
 async def fetch_img(query):
 
