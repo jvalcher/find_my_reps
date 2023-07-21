@@ -194,8 +194,6 @@ picture {
     max-width: 900px;
   }
 }
-@media screen and (min-width: 1400px) {
-}
 
 
 
@@ -207,11 +205,16 @@ picture {
   margin-top: 20px;
   font-family: $reps-font;
   color: $reps-font-color;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   width: 90%;
   text-align: center;
   line-height: 2rem;
   letter-spacing: 2px;
+}
+@media screen and (min-width: 775px) {
+    #note {
+        width: 580px;
+    }
 }
 
 #address-info {

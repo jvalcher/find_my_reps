@@ -14,8 +14,8 @@ export default class extends Main {
             </header>
             <main>
               <div id="note">
-                <p><i><b>Note:</b> This app doesn't use an image API.</i></p>
-                <p><i>It scrapes each image from Google Images individually using Selenium, so they take a while to load.</i></p>
+                <p><i><u><b>Note:</b></u></i></p> 
+                <p><i>This site doesn't use an image API. It uses Selenium to scrape Base64 images individually from a <b>Google Images</b> query, so they take longer to load.</i></p>
               </div>
               <section id="representatives">
 
