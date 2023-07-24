@@ -13,10 +13,6 @@ export default class extends Main {
                 <img src="/reps/static/images/us_flag_ellipse__112x118.png">
             </header>
             <main>
-              <div id="note">
-                <p><i><u><b>Note:</b></u></i></p> 
-                <p><i>This site doesn't use an image API. It uses Selenium to scrape Base64 images individually from a <b>Google Images</b> query, so they take longer to load.</i></p>
-              </div>
               <section id="representatives">
 
                   <div id="address-info">
