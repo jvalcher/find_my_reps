@@ -26,8 +26,10 @@ const {
   routes
  ********/
 
+// GET  /images
 app.use('/images', express.static(path.join(__dirname, 'images')))
 
+// GET  /
 app.get('/', async (req, res) => {
   try {
     timestamp.logfile(req);
@@ -39,6 +41,7 @@ app.get('/', async (req, res) => {
   }
 });
 
+// POST /reps
 app.post('/reps', async (req, res) => {
 
   try {
@@ -61,6 +64,7 @@ app.post('/reps', async (req, res) => {
 });
 
 
+// listen
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}\n`);
 });

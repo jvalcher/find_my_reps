@@ -1,0 +1,3 @@
+let l:bm_file_version = 1
+let l:bm_sessions = {'default': {'/home/jvalcher/Git/find_my_reps/src/server.js': [{'sign_idx': 9508, 'line_nr': 32, 'content': '// GET  /'},{'sign_idx': 9507, 'line_nr': 29, 'content': '// GET  /images'},{'sign_idx': 9511, 'line_nr': 67, 'content': '// listen'},{'sign_idx': 9501, 'line_nr': 11, 'content': '// utilities'},{'sign_idx': 9509, 'line_nr': 44, 'content': '// POST /reps'},{'sign_idx': 9502, 'line_nr': 18, 'content': '// views'},],}}
+let l:bm_current_session = 'default'
