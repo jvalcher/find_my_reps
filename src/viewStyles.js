@@ -1,74 +1,50 @@
+// styles
 
-/*----------
-   Sections
-  ----------
-  Colors
-  Fonts
-  Base Config
-  Header
-  Search
-  Representatives
-  ----------*/
+export const Styles = () => {
+  return `
 
-
-/*--------
-   Colors
-  --------*/
-
-$body-bg-color: #2C2C2C;
-$body-fg-color: #ffffff;
-$main-bg-color: #222E5E;
-$form-label-color: #F4C149;
-$form-bg-color: #19223F;
-$form-border-color: #3C66CE;
-$button-bg-color: #F4C149;
-$button-fg-color: black;
-$reps-font-color: #F4C149;
-$reps-even-addr-bg: #2a3872;
-$reps-odd-addr-bg: #12172f;
-$reps-border-color: #F4C149;
-
+<style>
 
 /*-------
    Fonts
   -------*/
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap');
-$home-header-font: 'Poppins', sans-serif;
-
-@import url('https://fonts.googleapis.com/css2?family=Alatsi&display=swap');$main-form-font: 'Alatsi';
-$reps-font: 'Alatsi';
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Alatsi&display=swap");
 
 
 /*-------------
    Base Config
   --------------*/
-
 *,
 *::before,
 *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
+
 a,
 a:link,
 a:visited,
 a:hover,
 a:active {
-    text-decoration: none;
+  text-decoration: none;
 }
+
 html {
-    width: 100vw;
-    height: 100vh;
- }
-body {
-    background-color: $body-bg-color;
-    color: $body-fg-color;
-    margin: 0 10px;
-    height: 99%;
-    height: 100%;
+  width: 100vw;
+  height: 100vh;
 }
+
+body {
+  background-color: #2C2C2C;
+  color: #ffffff;
+  margin: 0 10px;
+  height: 99%;
+  height: 100%;
+}
+
 
 
 /*--------
@@ -84,20 +60,24 @@ header {
   width: fit-content;
   margin: auto;
 }
+
 header a {
-  text-decoration: none; 
-  color: $body-fg-color;
+  text-decoration: none;
+  color: #ffffff;
 }
+
 header h1 {
   text-align: center;
-  font-family: $home-header-font;
+  font-family: "Poppins", sans-serif;
   font-size: 2.5rem;
   line-height: 51px;
 }
+
 header img {
   margin-left: 30px;
   width: 70px;
 }
+
 @media screen and (min-width: 660px) {
   header h1 {
     font-size: 3rem;
@@ -132,26 +112,30 @@ main {
   justify-content: center;
   align-items: center;
 }
+
 #search {
   display: flex;
   width: 90%;
   max-width: 800px;
 }
+
 form {
   width: 315px;
-  background-color: $form-bg-color;
-  border: 10px solid $form-border-color;
+  background-color: #19223F;
+  border: 10px solid #3C66CE;
   border-radius: 32px;
   margin: 40px auto;
   filter: drop-shadow(2px 2px 5px black);
 }
+
 label {
   display: block;
   margin: 20px 0 10px 10px;
-  font-family: $main-form-font;
+  font-family: "Alatsi";
   font-size: 1.25rem;
-  color: $form-label-color;
+  color: #F4C149;
 }
+
 input {
   display: block;
   width: 90%;
@@ -162,6 +146,7 @@ input {
   font-size: 1.5rem;
   justify-content: center;
 }
+
 #submit {
   margin: 30px auto 30px;
   text-align: center;
@@ -169,14 +154,16 @@ input {
   height: 50px;
   width: 150px;
   border-radius: 30px;
-  font-family: $main-form-font;
+  font-family: "Alatsi";
   font-size: 1.25rem;
-  background-color: $button-bg-color;
-  color: $button-fg-color;
+  background-color: #F4C149;
+  color: black;
 }
+
 picture {
   display: none;
 }
+
 @media screen and (min-width: 775px) {
   #search {
     display: flex;
@@ -203,24 +190,24 @@ picture {
 
 #note {
   margin-top: 20px;
-  font-family: $reps-font;
-  color: $reps-font-color;
+  font-family: "Alatsi";
+  color: #F4C149;
   font-size: 1.25rem;
   width: 90%;
   text-align: center;
   line-height: 2rem;
   letter-spacing: 2px;
 }
-@media screen and (min-width: 775px) {
-    #note {
-        width: 580px;
-    }
-}
 
+@media screen and (min-width: 775px) {
+  #note {
+    width: 580px;
+  }
+}
 #address-info {
   margin: 20px 0;
   width: 350px;
-  border: 2px solid $reps-border-color;
+  border: 2px solid #F4C149;
   filter: drop-shadow(2px 2px 5px black);
   border-radius: 10px;
   overflow: hidden;
@@ -232,11 +219,11 @@ picture {
 }
 
 #address-info p:nth-of-type(odd) {
-  background-color: $reps-odd-addr-bg;
+  background-color: #12172f;
 }
 
 #address-info p:nth-of-type(even) {
-  background-color: $reps-even-addr-bg;
+  background-color: #2a3872;
 }
 
 #representatives {
@@ -247,8 +234,8 @@ picture {
   margin: 20px auto;
   padding: 20px;
   filter: drop-shadow(2px 2px 5px black);
-  font-family: $reps-font;
-  color: $reps-font-color;
+  font-family: "Alatsi";
+  color: #F4C149;
 }
 
 #representatives h2 {
@@ -283,29 +270,12 @@ picture {
   overflow: hidden;
 }
 
-.loader {
-  position: absolute; 
-  border: 16px solid #f3f3f3; /* Light grey */
-  border-top: 16px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 100px;
-  height: 100px;
-  animation: spin 2s linear infinite;
-  margin: 45px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-.rep-img-div img {
-  //position: absolute; 
+.rep-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-}
-  
+
+
 #representatives figcaption {
   text-align: center;
   margin-bottom: 20px;
@@ -319,3 +289,7 @@ picture {
   text-align: center;
   font-style: italic;
 }
+
+</style>
+
+`};
