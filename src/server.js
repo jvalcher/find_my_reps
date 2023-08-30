@@ -26,8 +26,9 @@ import { Home, Reps, StylePage } from './views.js';
 import { cl, getApiData, filterReps } from './serverUtils.js';
 
 // rep image ratio socket
-io.on('connection', (socket) => {});
+io.on('connection', (socket) => {
 
+});
 
 // images
 app.use('/images', express.static( path.join(__dirname, 'images') ))
