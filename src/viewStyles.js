@@ -274,6 +274,7 @@ picture {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
 
 
 #representatives figcaption {
@@ -288,6 +289,55 @@ picture {
 #representatives article p {
   text-align: center;
   font-style: italic;
+}
+
+#rep-load-bg {
+  display: none;
+  position: fixed;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  background-color: #2C2C2C;
+  opacity: 98%;
+}
+
+#rep-load-msg {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  font-family: "Poppins", sans-serif;
+  font-size: 1.5rem;
+}
+
+#rep-load-msg p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#rep-load-text {
+  text-align: center;
+  margin: auto;
+  margin-bottom: 20px;
+}
+
+#rep-load-spinner {
+  border: 16px solid #f3f3f3;
+  border-top: 16px solid #3498db;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  animation: spin 2s linear infinite;
+  margin: auto;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 </style>

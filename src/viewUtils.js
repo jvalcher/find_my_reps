@@ -62,6 +62,20 @@ const startSelenium = async () => {
 };
 
 
+// rep images fetched ratio
+let repImgsFetched = "...";
+let repImgsTotal = "...";
+global.repImgRatio = `${repImgsFetched}/${repImgsTotal}`;
+
+const updateRatio = (fetched, total) => {
+    repImgsFetched = fetched;
+    repImgsTotal = total;
+    global.repImgRatio = `${repImgsFetched}/${repImgsTotal}`;
+};
+
+export const getRepImgRatio = () => {
+    return global.repImgRatio;
+};
 
 // scrape images from array of queries
 const scrapeImages = async (queryArr) => {
@@ -72,6 +86,11 @@ const scrapeImages = async (queryArr) => {
         if (!driver) {
             await startSelenium();
         }
+        
+        // set ratio
+        let fetched = 1;
+        const total = queryArr.length;
+        updateRatio(fetched, total);
 
         // scrape images in queryArr
         let images = [];
@@ -81,6 +100,9 @@ const scrapeImages = async (queryArr) => {
             const img = await driver.findElement(By.className('Q4LuWd'));
             const imgSrc = await img.getAttribute('src');
             (async () => images.push(imgSrc))();
+            fetched < total ? fetched += 1 : query;
+            console.log
+            updateRatio(fetched, queryArr.length);
         };
 
         return images;

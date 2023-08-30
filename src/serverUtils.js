@@ -1,3 +1,22 @@
+import fetch from 'node-fetch';
+import { HttpsProxyAgent } from 'https-proxy-agent';
+
+let proxy;
+let proxyAgent;
+if (process.env.ENV === 'dev') {
+    proxy = `${process.env.http_proxy}`;
+    proxyAgent = new HttpsProxyAgent(proxy);
+}
+
+/*
+    console.log
+ */
+export const cl = async (mes) => {
+    await console.log(mes);
+}
+
+
+
 /*
     fetch Google Civic API data
  */
@@ -7,7 +26,12 @@ export const getApiData = async (address, city, state, zip) => {
 
     // fetch data
     try {
-        const res = await fetch(url);
+        let res;
+        if (process.env.ENV === 'dev') {
+            res = await fetch(url, { agent: proxyAgent });
+        } else {
+            res = await fetch(url);
+        }
         const data = await res.json();
         return data;
     } catch (error) {

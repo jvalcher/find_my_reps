@@ -2,53 +2,35 @@
 
 import 'dotenv/config'
 import express from 'express';
+import http from 'http';
+import { Server } from 'socket.io';
 import * as url from 'url';
 import path from 'path';
-import cors from 'cors';
 import bodyParser from 'body-parser';
-import livereload from 'livereload';
-import connectLivereload from 'connect-livereload';
+
 
 const app = express();
 const PORT = 3050;
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const server = http.createServer(app);
+const io = new Server(server);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: true} ));
-app.use(cors());
-
-// live reload  (dev)
-if (process.env.ENV == 'dev') {
-
-    const liveReloadServer = livereload.createServer();
-    liveReloadServer.watch(path.join(__dirname, 'src'));
-
-    liveReloadServer.server.once("connection", () => {
-        setTimeout(() => {
-                liveReloadServer.refresh("/");
-            }, 100);
-    });
-
-    app.use(connectLivereload());
-
-    // sample reps page for styling
-    app.get('/style', (req, res) => {
-        try {
-            res.send( StylePage() );
-        } 
-        catch (e) {
-            console.log(`Style Page GET error: \n${e}`);
-        }
-    });
-}
 
 
 // views
 import { Home, Reps, StylePage } from './views.js';
 
 // server functions
-import { getApiData, filterReps } from './serverUtils.js';
+import { cl, getApiData, filterReps } from './serverUtils.js';
 
+// rep image ratio socket
+io.on('connection', (socket) => {});
+
+
+// images
+app.use('/images', express.static( path.join(__dirname, 'images') ))
 
 
 // Home page
@@ -61,7 +43,6 @@ app.get('/', (req, res) => {
     }
 });
 
-app.use('/images', express.static( path.join(__dirname, 'images') ))
 
 // reps page
 app.post('/reps', async (req, res) => {
@@ -70,15 +51,35 @@ app.post('/reps', async (req, res) => {
     const city = req.body.city;
     const state = req.body.state;
     const zip = req.body.zip;
+
+    // update rep image fetch ratio on page every half second
+    const repInterval = setInterval(() => {
+        io.emit('ratioUpdated', global.repImgRatio);
+    }, 500);
     
     const repsData = await getApiData(address, city, state, zip);
     const filteredReps = await filterReps(repsData);
     const repsPage = await Reps(filteredReps);
 
+    clearInterval(repInterval);
+
     res.send( repsPage );
 });
 
 
-app.listen(PORT, () => {
-    console.log(`\nFetch reps server running on port ${PORT}...\n`);
+// rep style page (dev)
+app.get('/rep-style', (req, res) => {
+    try {
+        res.send( StylePage() );
+    } 
+    catch (e) {
+        console.log(`Home GET error: \n${e}`);
+    }
+});
+
+
+server.listen(PORT, () => {
+    console.log(`\nFetch reps server running on port http://127.0.0.1:${PORT}`);
 })
+
+

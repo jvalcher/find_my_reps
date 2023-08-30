@@ -1,31 +1,30 @@
 {
-  "name": "civics_data",
+  "name": "find_my_reps",
   "version": "1.0.0",
-  "description": "Get political representatives for U.S. address from Google Civic Information API",
+  "description": "See federal, state, and local political representatives for any U.S. address ### [Live demo 🔗](https://jeffvalcher.com/reps)",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "copyclientenv": "cp env.mjs src/public/static/js/",
-    "configpyenv": "python3 -m pip install --user --upgrade pip && python3 -m pip install --user virtualenv && cd src/backend/scrapeImgUrl && python3 -m venv venv && . venv/bin/activate && pip install -r requirements.txt",
-    "config": "npm install && npm run copyclientenv && npm run configpyenv",
-    "fetchreps": "printf 'Express fetch reps server running on port 3050...\n' && pm2 start src/backend/fetchReps/fetchRepsServer.js",
-    "scraperepimages": "printf 'Flask image scraper running on port 1235...\n' && cd src/backend/scrapeImgUrl && . venv/bin/activate && pm2 start start.sh --name=scrapeRepImages",
-    "start": "npm run fetchreps & npm run scraperepimages &",
-    "logs": "pm2 logs"
+    "config": "cp env.mjs src",
+    "dev": "printf '##########\nDEV SERVER\n##########\n\n' && nodemon --watch src src/server.js",
+    "start": "pm2 delete find_reps; pm2 start src/server.js --name find_reps && printf 'Find my reps prod Express server running on 127.0.0.1:3050...\n\n'"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jvalcher/civics_data.git"
-  },
-  "author": "Jeffrey Valcher",
+  "author": "",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jvalcher/civics_data/issues"
-  },
-  "homepage": "https://github.com/jvalcher/civics_data#readme",
   "dependencies": {
     "body-parser": "^1.20.2",
-    "dotenv": "^16.0.3",
+    "chokidar": "^3.5.3",
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
-    "pm2": "^5.3.0"
+    "node-fetch": "^3.3.2",
+    "pm2": "^5.3.0",
+    "selenium": "^2.20.0",
+    "selenium-webdriver": "^4.11.1",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.7.2"
+  },
+  "devDependencies": {
+    "https-proxy-agent": "^7.0.1",
+    "ws": "^8.13.0"
   }
 }

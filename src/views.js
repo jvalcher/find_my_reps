@@ -19,9 +19,19 @@ export const Home = () => {
 
 <body>
 
+<div id="rep-load-bg">
+  <div id="rep-load-msg">
+    <div id="rep-load-text">Fetching representative images</div>
+    <p id="rep-load-ratio">.../...</p>
+    <div id="rep-load-spinner"></div>
+  </div>
+</div>
+
 <header id="search-header">
+  <div id="rep-load-spinner-container">
     <h1>Find my representatives</h1>
     <img id="home-img" src="/images/us_flag_ellipse__112x118.png">
+  </div>
 </header>
 <main>
     <section id="search">
@@ -43,6 +53,32 @@ export const Home = () => {
         </picture>
     </section>
 </main>
+
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+
+<script>
+
+  document.addEventListener("DOMContentLoaded", () => {
+
+    // display fetch rep images overlay on form submit
+    const searchForm = document.getElementById("search-form");
+    const repLoadBg = document.getElementById("rep-load-bg");
+
+    searchForm.addEventListener("submit", () => {
+      repLoadBg.style.display = "block";
+    });
+
+    // update rep image fetch ratio
+    const socket = io();
+    const repLoadRatio = document.getElementById('rep-load-ratio');
+    let num = 0;
+    socket.on('ratioUpdated', (ratio) => {
+      repLoadRatio.innerHTML = ratio;
+    });
+  });
+
+
+</script>
 
 </body>
 </html>
