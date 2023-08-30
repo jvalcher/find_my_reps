@@ -13,7 +13,7 @@ export const Home = () => {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/reps/images/favicon.png" type="image/x-icon">
   ${Styles()}
 </head>
 
@@ -30,12 +30,12 @@ export const Home = () => {
 <header id="search-header">
   <div id="rep-load-spinner-container">
     <h1>Find my representatives</h1>
-    <img id="home-img" src="/images/us_flag_ellipse__112x118.png">
+    <img id="home-img" src="/reps/images/us_flag_ellipse__112x118.png">
   </div>
 </header>
 <main>
     <section id="search">
-        <form id="search-form" action="/reps" method="post">
+        <form id="search-form" action="/reps/results" method="post">
             <label for="address">Address</label>
             <input type="text" id="address" name="address" class="form-input">
             <label for="city">City</label>
@@ -47,9 +47,9 @@ export const Home = () => {
             <input id="submit" type="submit" value="Search">
         </form>
         <picture>
-            <source srcset="/images/us_flag_ellipse__400x420.png" media="(min-width: 1500px)">
-            <source srcset="/images/us_flag_ellipse__300x315.png" media="(min-width: 775px)">
-            <img src="/images/us_flag_ellipse__508x533.png" alt="U.S. flag logo">
+            <source srcset="/reps/images/us_flag_ellipse__400x420.png" media="(min-width: 1500px)">
+            <source srcset="/reps/images/us_flag_ellipse__300x315.png" media="(min-width: 775px)">
+            <img src="/reps/images/us_flag_ellipse__508x533.png" alt="U.S. flag logo">
         </picture>
     </section>
 </main>
@@ -97,7 +97,7 @@ export const Reps = async (data) => {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/reps/images/favicon.png" type="image/x-icon">
   ${Styles()}
 </head>
 
@@ -105,7 +105,7 @@ export const Reps = async (data) => {
 
 <header id="reps-header">
     <a href="/reps"><h1>My representatives</h1></a>
-    <img src="/images/us_flag_ellipse__112x118.png">
+    <img src="/reps/images/us_flag_ellipse__112x118.png">
 </header>
 <main>
     <div id="address-info">
@@ -133,7 +133,7 @@ export const StylePage = () => {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/reps/images/favicon.png" type="image/x-icon">
   ${Styles()}
 </head>
 
@@ -141,7 +141,7 @@ export const StylePage = () => {
 
 <header id="reps-header">
     <a href="/reps"><h1>My representatives</h1></a>
-    <img src="/images/us_flag_ellipse__112x118.png">
+    <img src="/reps/images/us_flag_ellipse__112x118.png">
 </header>
 <main>
     <div id="address-info">
