@@ -8,7 +8,7 @@ import { log as cl } from 'console'
     Render reps section of page
  */
 
-export const renderReps = async (data) => {
+export const renderReps = async (data, ratio) => {
 
     let repsHtml = "";
 
@@ -29,7 +29,7 @@ export const renderReps = async (data) => {
     }
 
     // fetch images
-    const imageArr = await getRepImages(repQueryArray);
+    const imageArr = await getRepImages(repQueryArray, ratio);
 
     // create rep elements
     repsHtml = await addReps(data, repsHtml, imageArr);
@@ -38,73 +38,54 @@ export const renderReps = async (data) => {
 }
 
 
-/*
-    Helper functions
- */
-
 
 /*
-    Selenium Google Image scraper
- */
+    Image scraper
+    -----------------------------
+    Scrapes first Google Images search result for 
+    each query in queryArr; returns array of Base64
+    image strings
 
-// Selenium Chrome driver
-let driver = undefined;
-const startSelenium = async () => {
-    const options = new Options();
-    options.addArguments('--headless')
-    options.addArguments('--no-sandbox')
-    options.addArguments('--incognito')
-    driver = await new Builder()
-        .forBrowser('chrome')
-        .setChromeOptions(options)
-        .build();
-    return driver;
-};
+    - queryArr  -> representative search strings
+    - ratio     -> { fetched: "_", total: "_",  string: "_ / _"};
+        ** See "POST /reps" route socket in server.js
+*/
+const scrapeImages = async (queryArr, ratio) => {
 
-
-// rep images fetched ratio
-let repImgsFetched = "...";
-let repImgsTotal = "...";
-global.repImgRatio = `${repImgsFetched}/${repImgsTotal}`;
-
-const updateRatio = (fetched, total) => {
-    repImgsFetched = fetched;
-    repImgsTotal = total;
-    global.repImgRatio = `${repImgsFetched}/${repImgsTotal}`;
-};
-
-export const getRepImgRatio = () => {
-    return global.repImgRatio;
-};
-
-// scrape images from array of queries
-const scrapeImages = async (queryArr) => {
+    let images = [];
+    ratio.fetched = 1;
+    ratio.total = queryArr.length.toString();
+    ratio.string = `${ratio.fetched.toString()} / ${ratio.total}`;
 
     try {
 
-        // start Selenium
-        if (!driver) {
-            await startSelenium();
-        }
+        // start Selenium driver instance
+        const options = new Options();
+        options.addArguments('--headless')
+        options.addArguments('--no-sandbox')
+        options.addArguments('--incognito')
+        const driver = await new Builder()
+            .forBrowser('chrome')
+            .setChromeOptions(options)
+            .build();
         
-        // set ratio
-        let fetched = 1;
-        const total = queryArr.length;
-        updateRatio(fetched, total);
+        // scrape each query in queryArr
+        for await (const query of queryArr) {
 
-        // scrape images in queryArr
-        let images = [];
-        for (const query of queryArr) {
             const url = `https://www.google.com/search?site=&tbm=isch&source=hp&biw=1873&bih=990&q=${query}`;
+
+            // scrape image
             await driver.get(url);
             const img = await driver.findElement(By.className('Q4LuWd'));
             const imgSrc = await img.getAttribute('src');
             (async () => images.push(imgSrc))();
-            fetched < total ? fetched += 1 : query;
-            console.log
-            updateRatio(fetched, queryArr.length);
+
+            // update "<fetched> / <total>" ratio for socket
+            ratio.fetched += 1;
+            ratio.string = `${ratio.fetched.toString()} / ${ratio.total}`;
         };
 
+        await driver.quit();
         return images;
     } 
     catch (e) {
@@ -119,10 +100,10 @@ const scrapeImages = async (queryArr) => {
  */
 
 // fetch rep images
-const getRepImages = async (repQueryArray) =>
+const getRepImages = async (repQueryArray, ratio) =>
 {
     try {
-        const images = await scrapeImages(repQueryArray);
+        const images = await scrapeImages(repQueryArray, ratio);
         return images;
     } catch (e) {
         console.error(`Unable to fetch rep images: \n${e}`);

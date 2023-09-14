@@ -13,7 +13,7 @@ export const Home = () => {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/reps/images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
   ${Styles()}
 </head>
 
@@ -22,7 +22,7 @@ export const Home = () => {
 <div id="rep-load-bg">
   <div id="rep-load-msg">
     <div id="rep-load-text">Fetching representative images</div>
-    <p id="rep-load-ratio">.../...</p>
+    <p id="rep-load-ratio">_ / _</p>
     <div id="rep-load-spinner"></div>
   </div>
 </div>
@@ -30,12 +30,12 @@ export const Home = () => {
 <header id="search-header">
   <div id="rep-load-spinner-container">
     <h1>Find my representatives</h1>
-    <img id="home-img" src="/reps/images/us_flag_ellipse__112x118.png">
+    <img id="home-img" src="/images/us_flag_ellipse__112x118.png">
   </div>
 </header>
 <main>
     <section id="search">
-        <form id="search-form" action="/reps/results" method="post">
+        <form id="search-form" action="/reps" method="post">
             <label for="address">Address</label>
             <input type="text" id="address" name="address" class="form-input">
             <label for="city">City</label>
@@ -44,12 +44,13 @@ export const Home = () => {
             <input type="text" id="state" name="state" class="form-input">
             <label for="zip">ZIP Code</label>
             <input type="number" id="zip" name="zip" class="form-input">
+            <input type="text" id="ratio_id" name="ratio_id">
             <input id="submit" type="submit" value="Search">
         </form>
         <picture>
-            <source srcset="/reps/images/us_flag_ellipse__400x420.png" media="(min-width: 1500px)">
-            <source srcset="/reps/images/us_flag_ellipse__300x315.png" media="(min-width: 775px)">
-            <img src="/reps/images/us_flag_ellipse__508x533.png" alt="U.S. flag logo">
+            <source srcset="/images/us_flag_ellipse__400x420.png" media="(min-width: 1500px)">
+            <source srcset="/images/us_flag_ellipse__300x315.png" media="(min-width: 775px)">
+            <img src="/images/us_flag_ellipse__508x533.png" alt="U.S. flag logo">
         </picture>
     </section>
 </main>
@@ -63,18 +64,34 @@ export const Home = () => {
     // display fetch rep images overlay on form submit
     const searchForm = document.getElementById("search-form");
     const repLoadBg = document.getElementById("rep-load-bg");
-
     searchForm.addEventListener("submit", () => {
       repLoadBg.style.display = "block";
     });
+
+    // create unique socket id
+    const str_len = 5;
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let ratio_req_id = '';
+    for (let i = 0; i < str_len; i++) {
+        const index = Math.floor (Math.random() * characters.length);
+        ratio_req_id += characters[index];
+    }
+    console.log(ratio_req_id);
+
+    // add ratio_req_id to form data to submit
+    const ratio_input = document.getElementById('ratio_id');
+    ratio_input.style.display = 'none';
+    ratio_input.value = ratio_req_id;
 
     // update rep image fetch ratio
     const socket = io();
     const repLoadRatio = document.getElementById('rep-load-ratio');
     let num = 0;
-    socket.on('ratioUpdated', (ratio) => {
+    socket.on('ratioUpdated', ratio => {
       repLoadRatio.innerHTML = ratio;
     });
+    socket.emit('ratio_request', ratio_req_id);
+
   });
 
 
@@ -86,7 +103,7 @@ export const Home = () => {
 `};
 
 // #Reps
-export const Reps = async (data) => {
+export const Reps = async (data, ratio) => {
 
     return `
 
@@ -97,15 +114,15 @@ export const Reps = async (data) => {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/reps/images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
   ${Styles()}
 </head>
 
 <body>
 
 <header id="reps-header">
-    <a href="/reps"><h1>My representatives</h1></a>
-    <img src="/reps/images/us_flag_ellipse__112x118.png">
+    <a href="/" alt="Home"><h1>My representatives</h1></a>
+    <img src="/images/us_flag_ellipse__112x118.png">
 </header>
 <main>
     <div id="address-info">
@@ -114,7 +131,7 @@ export const Reps = async (data) => {
         <p id="my-district">${data.district}</p>
     </div>
     <section id="representatives">
-        ${await renderReps(data)}
+        ${await renderReps(data, ratio)}
     </section>
 </main>
 
@@ -133,7 +150,7 @@ export const StylePage = () => {
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="/reps/images/favicon.png" type="image/x-icon">
+  <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon">
   ${Styles()}
 </head>
 
@@ -141,7 +158,7 @@ export const StylePage = () => {
 
 <header id="reps-header">
     <a href="/reps"><h1>My representatives</h1></a>
-    <img src="/reps/images/us_flag_ellipse__112x118.png">
+    <img src="/images/us_flag_ellipse__112x118.png">
 </header>
 <main>
     <div id="address-info">

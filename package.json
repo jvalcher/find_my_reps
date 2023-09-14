@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "config": "cp env.mjs src",
-    "dev": "printf '##########\nDEV SERVER\n##########\n\n' && nodemon --watch src src/server.js",
+    "dev": "printf '##########\nFind My Representatives server started \n##########\n\n' && nodemon --watch src src/server.js",
     "start": "pm2 delete find_reps; pm2 start src/server.js --name find_reps && printf 'Find my reps prod Express server running on 127.0.0.1:3050...\n\n'"
   },
   "author": "",

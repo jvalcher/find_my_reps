@@ -1,6 +1,8 @@
 # Find my representatives
 
-See federal, state, city, and local political representatives for any U.S. address
+*See federal, state, city, and local political representatives for any U.S. address*<br>
+**Note:** This site doesn't use an image API. It uses Selenium to scrape Base64 images individually from a Google Images query, so they take longer to load.<br>
+
 ### [Live demo 🔗](https://jeffvalcher.com/reps)
 
 ## Screenshots
@@ -11,12 +13,10 @@ See federal, state, city, and local political representatives for any U.S. addre
 
 ## Frameworks, libraries, et al.
 
-*Note: This site doesn't use an image API. It uses Selenium to scrape Base64 images individually from a Google Images query, so they take longer to load.*
-
-- vanilla JS templating engine
 - Express backend
+- vanilla JS templating engine
 - Node Selenium image scraper
-- socket.io for image scraping progress
+- socket.io for displaying progress when fetching images
 
 ## Data sources
 
