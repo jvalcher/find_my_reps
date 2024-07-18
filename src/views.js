@@ -56,9 +56,11 @@ export const Home = () => {
     </section>
 </main>
 
-<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script src="/reps/socket.io/socket.io.js"></script>
 
 <script>
+
+  const socket = io ({path: "/reps/socket.io/"});
 
   document.addEventListener("DOMContentLoaded", () => {
 
@@ -78,19 +80,20 @@ export const Home = () => {
         ratio_req_id += characters[index];
     }
 
+    // emit id to server
+    socket.emit('ratio_request', ratio_req_id);
+
     // add ratio_req_id to form data to submit
     const ratio_input = document.getElementById('ratio_id');
     ratio_input.style.display = 'none';
     ratio_input.value = ratio_req_id;
 
     // update rep image fetch ratio
-    const socket = io();
     const repLoadRatio = document.getElementById('rep-load-ratio');
     let num = 0;
     socket.on('ratioUpdated', ratio => {
       repLoadRatio.innerHTML = ratio;
     });
-    socket.emit('ratio_request', ratio_req_id);
 
   });
 

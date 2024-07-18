@@ -10,3 +10,4 @@ __pycache__
 CHANGES.md
 pm2.*
 test_*
+server.logs

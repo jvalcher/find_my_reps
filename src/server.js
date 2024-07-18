@@ -14,9 +14,9 @@ import { cl, getApiData, filterReps } from './serverUtils.js';
 const PORT = 3050;
 const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
-const app = express();                      // express server
+const app = express();
 const server = http.createServer(app);
-const io = new Server(server);              // socket.io server
+const io = new Server(server); // socket.io server
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: true} ));
@@ -26,9 +26,15 @@ app.use(bodyParser.urlencoded( {extended: true} ));
     use in [POST '/reps'] route below
 */
 const sockets = {};
-io.on('connection', socket => {
+io.on('connection', function(socket) {
+
     socket.on('ratio_request', ratio_req_id => {
         sockets[ratio_req_id] = socket;
+    });
+
+    // Clean up the socket when it disconnects
+    socket.on('disconnect', ratio_req_id => {
+        delete sockets[ratio_req_id];
     });
 });
 
@@ -55,6 +61,8 @@ app.get('/', (req, res) => {
 // Representatives page
 app.post('/reps', async (req, res) => {
 
+    req.setTimeout(300000);
+
     const address   = req.body.address;
     const city      = req.body.city;
     const state     = req.body.state;
@@ -80,7 +88,7 @@ app.post('/reps', async (req, res) => {
     (async () => {
         repInterval = setInterval(() => {
             sockets[ratio_req_id].emit('ratioUpdated', fetchedRepImgsRatio.string);
-    }, 500);
+        }, 500);
     })();
 
     // create reps page
@@ -92,6 +100,7 @@ app.post('/reps', async (req, res) => {
     clearInterval(repInterval);
     sockets[ratio_req_id].disconnect(true);
     delete sockets[ratio_req_id];
+
     return;
 });
 
