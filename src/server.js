@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
 // Representatives page
 app.post('/reps', async (req, res) => {
 
-    req.setTimeout(300000);
+    req.setTimeout(0);
 
     const address   = req.body.address;
     const city      = req.body.city;
@@ -98,6 +98,7 @@ app.post('/reps', async (req, res) => {
 
     // clean up interval, socket
     clearInterval(repInterval);
+    sockets[ratio_req_id].emit('imagesFetched');
     sockets[ratio_req_id].disconnect(true);
     delete sockets[ratio_req_id];
 

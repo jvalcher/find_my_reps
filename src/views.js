@@ -95,6 +95,11 @@ export const Home = () => {
       repLoadRatio.innerHTML = ratio;
     });
 
+    // hide overlay
+    socket.on('imagesFetched', () => {
+      repLoadBg.style.display = "none";
+    });
+
   });
 
 

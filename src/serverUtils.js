@@ -47,11 +47,11 @@ export const getApiData = async (address, city, state, zip) => {
 export const filterReps = async (civicData) => {
 
     let data = {
-        'address': undefined,
-        'state': undefined,
-        'city': undefined,
-        'county': undefined,
-        'district': undefined, 
+        'address': '',
+        'state': '',
+        'city': '',
+        'county': '',
+        'district': '', 
         'reps': {
             'federal': [],
             'state': [],
