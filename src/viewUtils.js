@@ -50,7 +50,7 @@ export const renderReps = async (data, ratio) => {
     - ratio     -> { fetched: "_", total: "_",  string: "_ / _"};
         ** See "POST /reps" route socket in server.js
 */
-const scrapeImages = async (queryArr, ratio) => {
+export const scrapeImages = async (queryArr, ratio) => {
 
     let images = [];
     ratio.fetched = 1;
@@ -76,7 +76,7 @@ const scrapeImages = async (queryArr, ratio) => {
 
             // scrape image
             await driver.get(url);
-            const img = await driver.findElement(By.className('Q4LuWd'));
+            const img = await driver.findElement(By.className('YQ4gaf'));
             const imgSrc = await img.getAttribute('src');
             (async () => images.push(imgSrc))();
 
