@@ -16,7 +16,7 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const app = express();
 const server = http.createServer(app);
-const io = new Server(server); // socket.io server
+const sock = new Server(server); // socket.io server
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: true} ));
@@ -26,10 +26,14 @@ app.use(bodyParser.urlencoded( {extended: true} ));
     use in [POST '/reps'] route below
 */
 const sockets = {};
-io.on('connection', function(socket) {
+sock.on('connection', function(socket) {
 
     socket.on('ratio_request', ratio_req_id => {
         sockets[ratio_req_id] = socket;
+    });
+
+    socket.on('connect_error', (err) => {
+        console.log(`Socket connect error: ${err.message}`);
     });
 
     // Clean up the socket when it disconnects
@@ -43,7 +47,7 @@ io.on('connection', function(socket) {
     Routes
 */
 
-// Images
+app.use('/socket.io', express.static( path.join(__dirname, 'socket.io') ))
 app.use('/images', express.static( path.join(__dirname, 'images') ))
 
 
@@ -61,7 +65,7 @@ app.get('/', (req, res) => {
 // Representatives page
 app.post('/reps', async (req, res) => {
 
-    req.setTimeout(0);
+    req.setTimeout(1000 * 60 * 10);
 
     const address   = req.body.address;
     const city      = req.body.city;
