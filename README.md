@@ -3,6 +3,9 @@
 See federal, state, city, and local political representatives for any U.S. address<br>
 <br>
 **Note:**<br>*This site doesn't use an image API. It uses Selenium to scrape Base64 images individually from a Google Images query, so they take longer to load.*<br>
+<br>
+**07-20-2024 update:**<br>*For some reason `socket.io` has stopped working in Firefox. Chrome still shows the image fetch updates.*<br>
+
 
 ### [Live demo 🔗](https://jeffvalcher.com/reps)
 
