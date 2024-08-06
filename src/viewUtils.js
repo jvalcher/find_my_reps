@@ -73,10 +73,12 @@ export const scrapeImages = async (queryArr, ratio) => {
         for await (const query of queryArr) {
 
             const url = `https://www.google.com/search?site=&tbm=isch&source=hp&biw=1873&bih=990&q=${query}`;
+            //const url = `http://www.google.com/images?q=${query}`;
 
             // scrape image
             await driver.get(url);
-            const img = await driver.findElement(By.className('YQ4gaf'));
+            const imgDiv = await driver.findElement(By.className('eA0Zlc'));
+            const img = await imgDiv.findElement(By.className('YQ4gaf'));
             const imgSrc = await img.getAttribute('src');
             (async () => images.push(imgSrc))();
 
@@ -84,6 +86,8 @@ export const scrapeImages = async (queryArr, ratio) => {
             ratio.fetched += 1;
             ratio.string = `${ratio.fetched.toString()} / ${ratio.total}`;
         };
+
+        console.log(images);
 
         await driver.quit();
         return images;

@@ -16,11 +16,7 @@ const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
 
 const app = express();
 const server = http.createServer(app);
-const sock = new Server(server, {
-  cors: {
-    origin: "https://jeffvalcher.com"
-  }
-}); // socket.io server
+const sock = new Server(server); // socket.io server
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded( {extended: true} ));
